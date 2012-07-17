@@ -11,7 +11,7 @@ alias la='ls -a --color=auto'
 alias lll='ls -l --color=auto | more'
 
 alias grep='grep --color=auto'
-
+# with sudo ?
 alias emacs='sudo emacs -nw'
 alias pacman='sudo pacman-color'
 
