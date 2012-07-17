@@ -12,8 +12,8 @@ alias lll='ls -l --color=auto | more'
 
 alias grep='grep --color=auto'
 
-alias emacs='emacs -nw'
-alias pacman='pacman-color'
+alias emacs='sudo emacs -nw'
+alias pacman='sudo pacman-color'
 
 complete -cf sudo
 complete -cf man
