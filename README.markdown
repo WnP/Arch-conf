@@ -7,4 +7,4 @@ Arch-conf
 
 I really enjoy `python` ^_^
 
-![Arch-logo](http://github.com/Mo0OFier/Arch-conf/raw/master/allogo.jpg)
+![Arch-logo](http://github.com/WnP/Arch-conf/raw/master/allogo.jpg)
