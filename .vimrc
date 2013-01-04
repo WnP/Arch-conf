@@ -40,3 +40,6 @@ autocmd FileType html set tabstop=2|set shiftwidth=2|set expandtab
 
 " css indent
 autocmd FileType css set tabstop=4|set shiftwidth=4|set expandtab
+
+" javascript indent
+au FileType javascript set tabstop=2|set shiftwidth=2|set expandtab
