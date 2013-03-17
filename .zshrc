@@ -38,6 +38,8 @@ alias grep='grep --color=always -d skip'
 alias emacs='sudo emacs -nw'
 alias pacman='sudo pacman-color'
 alias systemctl='sudo systemctl'
+alias mount='sudo mount'
+alias umount='sudo umount'
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 alias tmux='tmux -2'
 
