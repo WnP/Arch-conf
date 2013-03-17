@@ -16,7 +16,7 @@
 " - zencoding-vim : https://github.com/mattn/zencoding-vim
 " - snipmate-snippets : https://github.com/honza/snipmate-snippets
 " - vim-snipmate : https://github.com/garbas/vim-snipmate
-"  dep: |- tlib_vim : https://github.com/MarcWeber/vim-addon-mw-utils
+"  dep: |- tlib_vim : https://github.com/vim-scripts/tlib.git
 "       |- vim-addon-mw-utils : https://github.com/MarcWeber/vim-addon-mw-utils
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
