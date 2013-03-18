@@ -43,6 +43,7 @@ autocmd FileType css set tabstop=4|set shiftwidth=4|set expandtab
 
 " javascript indent
 au FileType javascript set tabstop=2|set shiftwidth=2|set expandtab
+au FileType kivy set tabstop=4|set shiftwidth=4|set expandtab
 
 :highlight Folded guibg=blue guifg=grey
 :highlight FoldColumn guibg=blue guifg=grey
