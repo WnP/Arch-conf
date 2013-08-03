@@ -36,7 +36,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias grep='grep --color=always -d skip'
 alias emacs='sudo emacs -nw'
-alias pacman='sudo pacman-color'
+alias pacman='sudo pacman'
 alias systemctl='sudo systemctl'
 alias mount='sudo mount'
 alias umount='sudo umount'
@@ -48,6 +48,8 @@ alias tmux='tmux -2'
 #export LS_COLORS
 
 export EDITOR='vim'
+#export PATH=$PATH:/home/scl/.gem/ruby/2.0.0/bin
+#export GEM_HOME=~/.gem/ruby/2.0.0
 
 # Tips #######################################
 #                                            #

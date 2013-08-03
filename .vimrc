@@ -1,50 +1,55 @@
-"""""""""""""""""""
-" Help on plugins "
-" 
-" python : https://github.com/klen/python-mode
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+" vundle conf {{{
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+" }}}
+
+" bundles {{{
+
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+Bundle 'klen/python-mode'
+Bundle 'scrooloose/nerdtree'
+Bundle 'mbbill/undotree'
+Bundle 'tpope/vim-fugitive'
+Bundle 'groenewege/vim-less'
+Bundle 'pangloss/vim-javascript'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'hail2u/vim-css3-syntax'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-markdown'
+Bundle 'sophacles/vim-bundle-mako'
+Bundle 'vim-scripts/django.vim'
+
+filetype plugin indent on     " required!
 "
-" html : https://raw.github.com/mattn/zencoding-vim/master/TUTORIAL
-"        https://github.com/mattn/zencoding-vim
-" 
-" snippets: ~/.vim/bundle/snipmate-snippets/snippets/*.snippets
-" openerp:  ~/.vim/snippets/python
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" bundle list "
-"
-" - vim-javascript : https://github.com/pangloss/vim-javascript
-" - zencoding-vim : https://github.com/mattn/zencoding-vim
-" - snipmate-snippets : https://github.com/honza/snipmate-snippets
-" - vim-snipmate : https://github.com/garbas/vim-snipmate
-"  dep: |- tlib_vim : https://github.com/vim-scripts/tlib.git
-"       |- vim-addon-mw-utils : https://github.com/MarcWeber/vim-addon-mw-utils
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
 
-" Python
-syntax on
-filetype plugin indent on
+" }}}
 
-if has("autocmd")
-    filetype plugin on 
-endif
-
-" pathogen
-call pathogen#infect() 
-call pathogen#helptags()
-
-" inprove rope speed
-let g:pymode_rope_guess_project = 0
-
-" html indent
-autocmd FileType html set tabstop=2|set shiftwidth=2|set expandtab
-
-" css indent
-autocmd FileType css set tabstop=4|set shiftwidth=4|set expandtab
-
-" javascript indent
-au FileType javascript set tabstop=2|set shiftwidth=2|set expandtab
-au FileType kivy set tabstop=4|set shiftwidth=4|set expandtab
-
+" set fold color
 :highlight Folded guibg=blue guifg=grey
 :highlight FoldColumn guibg=blue guifg=grey
 :highlight Folded ctermfg=7 ctermbg=0
+
+" color syntax
+syntax on
+
+" map jk for exit insert mode
+imap jk <ESC>
+
+" remove useless line number set by python-mode
+au BufRead,BufNewFile *.py set nonumber
+
+" vim: fdm=marker:fdl=0
