@@ -34,6 +34,9 @@ filetype plugin indent on     " required by vundle!
 
 " color and syntax {{{ 
 
+" color syntax
+syntax on
+
 " set fold color
 highlight Folded guibg=blue guifg=grey
 highlight FoldColumn guibg=blue guifg=grey
@@ -49,12 +52,19 @@ highlight VertSplit ctermbg=232 ctermfg=0
 set laststatus=0
 set statusline=\
 
+" ruler setting
+set ruler
+set rulerformat=%-50(%=%M%H%R\ %f%<\ (%n)%4(%)%Y:%{&tw}%9(%l,%c%V%)%4(%)%P%)
+
+" put ⋅ for space at the end of line
+" | for tabs
+" ˽ for non breakable space
+set list
+set listchars=tab:\|\ ,trail:⋅,nbsp:˽
+
 " statusline color
 highlight statusline ctermbg=0 ctermfg=0
 highlight StatusLineNC ctermbg=0 ctermfg=0
-
-" color syntax
-syntax on
 
 " remove useless line number set by python-mode
 au BufRead,BufNewFile *.py set nonumber
@@ -89,11 +99,31 @@ nmap <leader>H <Plug>GitGutterPrevHunk
 nnoremap <leader>u :UndotreeToggle<cr>
 
 " NeerdTree
-nnoremap <leader>t :NERDTreeToggle<cr>
+nnoremap <leader>e :NERDTreeToggle<cr>
 
 " usefull for search, centering the result
 nnoremap n nzz
 nnoremap N Nzz
+
+" tab keys
+map <leader>tn :tabnew<cr>
+map <leader>tc :tabclose<CR>
+
+" paste
+set pastetoggle=<leader>p
+
+" don't use arrow keys
+map <right> <esc>
+map <left> <esc>
+map <up> <esc>
+map <down> <esc>
+imap <right> <esc>
+imap <left> <esc>
+imap <up> <esc>
+imap <down> <esc>
+
+" upload to sprunge.us
+command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
 
 " }}}
 
