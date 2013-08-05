@@ -1,5 +1,7 @@
 set nocompatible               " be iMproved
 filetype off                   " required by vundle!
+set laststatus=0
+set statusline=\
 
 " vundle conf {{{
 set rtp+=~/.vim/bundle/vundle/
@@ -33,12 +35,17 @@ filetype plugin indent on     " required by vundle!
 " color and syntax {{{ 
 
 " set fold color
-:highlight Folded guibg=blue guifg=grey
-:highlight FoldColumn guibg=blue guifg=grey
-:highlight Folded ctermfg=7 ctermbg=0
+highlight Folded guibg=blue guifg=grey
+highlight FoldColumn guibg=blue guifg=grey
+highlight Folded ctermfg=7 ctermbg=0
 
 " Gutter color
 highlight SignColumn ctermbg=232
+
+" vsplit color
+highlight VertSplit ctermbg=232 ctermfg=0
+
+highlight statusline ctermbg=0 ctermfg=0
 
 " color syntax
 syntax on
