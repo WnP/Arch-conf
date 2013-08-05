@@ -1,5 +1,5 @@
 set nocompatible               " be iMproved
-filetype off                   " required!
+filetype off                   " required by vundle!
 
 " vundle conf {{{
 set rtp+=~/.vim/bundle/vundle/
@@ -8,7 +8,7 @@ call vundle#rc()
 
 " bundles {{{
 
-" required! 
+" required it's vundle! 
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
@@ -26,7 +26,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
 
-filetype plugin indent on     " required!
+filetype plugin indent on     " required by vundle!
 
 " }}}
 
@@ -53,24 +53,34 @@ autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
 
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
-au Filetype vim set omnifunc=javascriptcomplete#CompleteJS foldmethod=marker
+au Filetype vim set foldmethod=marker
+
+" minimum number of line under and above the cursor
+set scrolloff=5
 
 " }}}
 
 " Key map {{{
 
+" remap the leader default: '\'
+let mapleader='!'
+
 " map jk for exit insert mode
 imap jk <ESC>
 
 " GitGutter - navig through git diff
-nmap gh <Plug>GitGutterNextHunk
-nmap gH <Plug>GitGutterPrevHunk
+nmap <leader>h <Plug>GitGutterNextHunk
+nmap <leader>H <Plug>GitGutterPrevHunk
 
 " UndoTree
-nnoremap gu :UndotreeToggle<cr>
+nnoremap <leader>u :UndotreeToggle<cr>
 
 " NeerdTree
-nnoremap gt :NERDTreeToggle<cr>
+nnoremap <leader>t :NERDTreeToggle<cr>
+
+" usefull for search, centering the result
+nnoremap n nzz
+nnoremap N Nzz
 
 " }}}
 
@@ -113,8 +123,7 @@ endif
 set ignorecase " Do case insensitive matching
 set smartcase " Do smart case matching, search case sensitive if at least one upercase in the patern
 set incsearch " Incremental search, start searching will typing patern
-set scrolloff=999 " search result mostly centered verticaly
 
 " }}}
 
-" vim: fdm=marker:fdl=0
+" vim: fdm=marker
