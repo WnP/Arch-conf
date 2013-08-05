@@ -16,6 +16,7 @@ Bundle 'klen/python-mode'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mbbill/undotree'
 Bundle 'tpope/vim-fugitive'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'groenewege/vim-less'
 Bundle 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
@@ -29,18 +30,18 @@ filetype plugin indent on     " required!
 
 " }}}
 
-" My custom {{{ 
+" color and syntax {{{ 
 
 " set fold color
 :highlight Folded guibg=blue guifg=grey
 :highlight FoldColumn guibg=blue guifg=grey
 :highlight Folded ctermfg=7 ctermbg=0
 
+" Gutter color
+highlight SignColumn ctermbg=232
+
 " color syntax
 syntax on
-
-" map jk for exit insert mode
-imap jk <ESC>
 
 " remove useless line number set by python-mode
 au BufRead,BufNewFile *.py set nonumber
@@ -53,6 +54,66 @@ autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
 au Filetype vim set omnifunc=javascriptcomplete#CompleteJS foldmethod=marker
+
+" }}}
+
+" Key map {{{
+
+" map jk for exit insert mode
+imap jk <ESC>
+
+" GitGutter - navig through git diff
+nmap gh <Plug>GitGutterNextHunk
+nmap gH <Plug>GitGutterPrevHunk
+
+" UndoTree
+nnoremap gu :UndotreeToggle<cr>
+
+" NeerdTree
+nnoremap gt :NERDTreeToggle<cr>
+
+" }}}
+
+" persistence {{{
+" thanks to TWal https://github.com/TWal
+
+if isdirectory($HOME . '/.vim/backup') == 0
+	:silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
+endif
+set backupdir-=.
+set backupdir+=.
+set backupdir-=~/
+set backupdir^=~/.vim/backup/
+set backup
+
+" Save swp files to a less annoying place than the current directory.
+if isdirectory($HOME . '/.vim/swap') == 0
+	:silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+endif
+set directory=~/.vim/swap//
+set directory+=.
+
+" viminfo stores the the state of your previous editing session
+set viminfo+=n~/.vim/viminfo
+
+if exists("+undofile")
+	" undofile - This allows you to use undos after exiting and restarting
+	if isdirectory($HOME . '/.vim/undo') == 0
+		:silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+	endif
+	set undodir=~/.vim/undo//
+	set undodir=~/.vim/undo//
+	set undofile
+endif
+
+" }}}
+
+" search {{{
+
+set ignorecase " Do case insensitive matching
+set smartcase " Do smart case matching, search case sensitive if at least one upercase in the patern
+set incsearch " Incremental search, start searching will typing patern
+set scrolloff=999 " search result mostly centered verticaly
 
 " }}}
 
