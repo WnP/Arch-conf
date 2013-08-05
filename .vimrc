@@ -1,11 +1,11 @@
 set nocompatible               " be iMproved
-filetype off                   " required by vundle!
-set laststatus=0
-set statusline=\
 
 " vundle conf {{{
+
+filetype off                   " required by vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
 " }}}
 
 " bundles {{{
@@ -44,6 +44,10 @@ highlight SignColumn ctermbg=232
 
 " vsplit color
 highlight VertSplit ctermbg=232 ctermfg=0
+
+" remove statusline
+set laststatus=0
+set statusline=\
 
 " statusline color
 highlight statusline ctermbg=0 ctermfg=0
