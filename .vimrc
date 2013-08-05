@@ -51,7 +51,7 @@ autocmd FileType html setlocal shiftwidth=2 tabstop=2
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
 
 " Language folding
-au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent
+au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
 au Filetype vim set omnifunc=javascriptcomplete#CompleteJS foldmethod=marker
 
 " }}}
