@@ -26,17 +26,10 @@ Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
 
 filetype plugin indent on     " required!
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
 
 " }}}
+
+" My custom {{{ 
 
 " set fold color
 :highlight Folded guibg=blue guifg=grey
@@ -51,5 +44,16 @@ imap jk <ESC>
 
 " remove useless line number set by python-mode
 au BufRead,BufNewFile *.py set nonumber
+
+" Language syntax indent
+autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
+
+" Language folding
+au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent
+au Filetype vim set omnifunc=javascriptcomplete#CompleteJS foldmethod=marker
+
+" }}}
 
 " vim: fdm=marker:fdl=0
