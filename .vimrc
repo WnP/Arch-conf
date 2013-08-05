@@ -45,7 +45,9 @@ highlight SignColumn ctermbg=232
 " vsplit color
 highlight VertSplit ctermbg=232 ctermfg=0
 
+" statusline color
 highlight statusline ctermbg=0 ctermfg=0
+highlight StatusLineNC ctermbg=0 ctermfg=0
 
 " color syntax
 syntax on
