@@ -83,7 +83,7 @@ set scrolloff=5
 
 " }}}
 
-" Key map {{{
+" Key map and Plugin conf {{{
 
 " remap the leader default: '\'
 let mapleader='!'
@@ -100,6 +100,7 @@ nnoremap <leader>u :UndotreeToggle<cr>
 
 " NeerdTree
 nnoremap <leader>e :NERDTreeToggle<cr>
+let NERDTreeQuitOnOpen=1
 
 " usefull for search, centering the result
 nnoremap n nzz
