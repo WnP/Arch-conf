@@ -38,7 +38,7 @@ filetype plugin indent on     " required by vundle!
 syntax on
 set t_Co=256
 
-" fold text
+" fold text {{{
 if has("folding")
   set foldtext=MyFoldText()
   function! MyFoldText()
@@ -75,6 +75,7 @@ if has("folding")
     return printf('%s%*s', l:linetext, l:align, l:foldtext)
   endfunction
 endif
+" }}}
 
 " set fold color
 highlight Folded ctermfg=DarkBlue ctermbg=232
@@ -85,18 +86,25 @@ highlight SignColumn ctermbg=232
 " vsplit color
 highlight VertSplit ctermbg=0 ctermfg=0
 
-" statusline color
-highlight statusline ctermbg=0 ctermfg=0
-highlight StatusLineNC ctermbg=0 ctermfg=0
-
 " visual color
 hi Visual  ctermbg=0 ctermfg=Grey
+
+" popup menu color
+hi Pmenu ctermbg=11 ctermfg=8
+hi PmenuSel ctermbg=8 ctermfg=11
 
 " tab color
 hi TabLineFill ctermfg=Black ctermbg=Black
 hi TabLine ctermfg=DarkBlue ctermbg=Black
 hi TabLineSel ctermfg=Red ctermbg=Black
 hi Title ctermfg=LightBlue ctermbg=Black
+
+" parenthesis highlighting color
+hi MatchParen cterm=bold ctermbg=0 ctermfg=none
+
+" statusline color
+highlight statusline ctermbg=0 ctermfg=0
+highlight StatusLineNC ctermbg=0 ctermfg=0
 
 " remove statusline
 set laststatus=0
