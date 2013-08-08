@@ -36,17 +36,64 @@ filetype plugin indent on     " required by vundle!
 
 " color syntax
 syntax on
+set t_Co=256
+
+" fold text
+if has("folding")
+  set foldtext=MyFoldText()
+  function! MyFoldText()
+    " for now, just don't try if version isn't 7 or higher
+    if v:version < 701
+      return foldtext()
+    endif
+    " clear fold from fillchars to set it up the way we want later
+    let &l:fillchars = substitute(&l:fillchars,',\?fold:.','','gi')
+    let l:numwidth = (v:version < 701 ? 8 : &numberwidth)
+    if &fdm=='diff'
+      let l:linetext=''
+      let l:foldtext='---------- '.(v:foldend-v:foldstart+1).' lines the same ----------'
+      let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
+      let l:align = (l:align / 2) + (strlen(l:foldtext)/2)
+      " note trailing space on next line
+      setlocal fillchars+=fold:\ 
+    elseif !exists('b:foldpat') || b:foldpat==0
+      let l:foldtext = ' '.(v:foldend-v:foldstart).' lines folded'.v:folddashes.'|'
+      let l:endofline = (&textwidth>0 ? &textwidth : 80)
+      let l:linetext = strpart(getline(v:foldstart),0,l:endofline-strlen(l:foldtext))
+      let l:align = l:endofline-strlen(l:linetext)
+      setlocal fillchars+=fold:-
+    elseif b:foldpat==1
+      let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
+      let l:foldtext = ' '.v:folddashes
+      let l:linetext = substitute(getline(v:foldstart),'\s\+$','','')
+      let l:linetext .= ' ---'.(v:foldend-v:foldstart-1).' lines--- '
+      let l:linetext .= substitute(getline(v:foldend),'^\s\+','','')
+      let l:linetext = strpart(l:linetext,0,l:align-strlen(l:foldtext))
+      let l:align -= strlen(l:linetext)
+      setlocal fillchars+=fold:-
+    endif
+    return printf('%s%*s', l:linetext, l:align, l:foldtext)
+  endfunction
+endif
 
 " set fold color
-highlight Folded guibg=blue guifg=grey
-highlight FoldColumn guibg=blue guifg=grey
-highlight Folded ctermfg=7 ctermbg=0
+highlight Folded ctermfg=DarkBlue ctermbg=232
 
 " Gutter color
 highlight SignColumn ctermbg=232
 
 " vsplit color
-highlight VertSplit ctermbg=232 ctermfg=0
+highlight VertSplit ctermbg=0 ctermfg=0
+
+" statusline color
+highlight statusline ctermbg=0 ctermfg=0
+highlight StatusLineNC ctermbg=0 ctermfg=0
+
+" tab color
+hi TabLineFill ctermfg=Black ctermbg=Black
+hi TabLine ctermfg=DarkBlue ctermbg=Black
+hi TabLineSel ctermfg=Red ctermbg=Black
+hi Title ctermfg=LightBlue ctermbg=Black
 
 " remove statusline
 set laststatus=0
@@ -62,10 +109,6 @@ set rulerformat=%-50(%=%M%H%R\ %f%<\ (%n)%4(%)%Y:%{&tw}%9(%l,%c%V%)%4(%)%P%)
 set list
 set listchars=tab:\|\ ,trail:⋅,nbsp:˽
 
-" statusline color
-highlight statusline ctermbg=0 ctermfg=0
-highlight StatusLineNC ctermbg=0 ctermfg=0
-
 " remove useless line number set by python-mode
 au BufRead,BufNewFile *.py set nonumber
 
@@ -78,6 +121,7 @@ autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 expandtab
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
 au Filetype vim set foldmethod=marker
+au Filetype python set foldtext=MyFoldText()
 
 " minimum number of line under and above the cursor
 set scrolloff=5
