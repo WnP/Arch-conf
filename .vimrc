@@ -89,6 +89,9 @@ highlight VertSplit ctermbg=0 ctermfg=0
 highlight statusline ctermbg=0 ctermfg=0
 highlight StatusLineNC ctermbg=0 ctermfg=0
 
+" visual color
+hi Visual  ctermbg=0 ctermfg=Grey
+
 " tab color
 hi TabLineFill ctermfg=Black ctermbg=Black
 hi TabLine ctermfg=DarkBlue ctermbg=Black
