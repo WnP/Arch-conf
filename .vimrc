@@ -19,11 +19,12 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'mbbill/undotree'
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
 Bundle 'groenewege/vim-less'
 Bundle 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'hail2u/vim-css3-syntax'
-Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-markdown'
 Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
@@ -124,10 +125,12 @@ set listchars=tab:\|\ ,trail:⋅,nbsp:˽
 au BufRead,BufNewFile *.py set nonumber
 
 " Language syntax indent
-autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
+autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab
+autocmd FileType css setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType xml setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType mako setlocal shiftwidth=2 tabstop=2 expandtab
 
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
@@ -181,6 +184,9 @@ imap <down> <esc>
 
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
+
+" Maximum allowed mccabe complexity
+let g:pymode_lint_mccabe_complexity = 12
 
 " }}}
 
