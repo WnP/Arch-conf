@@ -1,4 +1,5 @@
 set nocompatible               " be iMproved
+set modeline
 
 " vundle conf {{{
 
@@ -14,7 +15,9 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
-Bundle 'klen/python-mode'
+Bundle 'davidhalter/jedi-vim'
+" don't forget to install flake8: pip install flake8
+Bundle 'nvie/vim-flake8'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mbbill/undotree'
 Bundle 'tpope/vim-fugitive'
@@ -27,6 +30,12 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-markdown'
 Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
+Bundle 'ervandew/supertab'
+" snippet
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
 
 filetype plugin indent on     " required by vundle!
 
@@ -114,12 +123,6 @@ set statusline=\
 set ruler
 set rulerformat=%-50(%=%M%H%R\ %f%<\ (%n)%4(%)%Y:%{&tw}%9(%l,%c%V%)%4(%)%P%)
 
-" put ⋅ for space at the end of line
-" | for tabs
-" ˽ for non breakable space
-set list
-set listchars=tab:\|\ ,trail:⋅,nbsp:˽
-
 " remove useless line number set by python-mode
 au BufRead,BufNewFile *.py set nonumber
 
@@ -142,7 +145,7 @@ set scrolloff=5
 " Key map and Plugin conf {{{
 
 " remap the leader default: '\'
-let mapleader='!'
+let mapleader=';'
 
 " map jk for exit insert mode
 imap jk <ESC>
@@ -181,6 +184,16 @@ imap <down> <esc>
 
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
+
+" vim jedi don't auto start completion
+let g:jedi#popup_on_dot = 0
+
+" supertab depend on context, usefull to complete snipet and python methodes
+let g:SuperTabDefaultCompletionType = "context"
+
+" just be less pep8 nazi
+let g:flake8_max_line_length=99
+let g:flake8_max_complexity=10
 
 " }}}
 
@@ -226,4 +239,4 @@ set incsearch " Incremental search, start searching will typing patern
 
 " }}}
 
-" vim: fdm=marker
+" vim: set fdm=marker set fenc=utf-8
