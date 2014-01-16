@@ -11,22 +11,24 @@ call vundle#rc()
 
 " bundles {{{
 
-" required it's vundle! 
+" required it's vundle!
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
 Bundle 'davidhalter/jedi-vim'
-" don't forget to install flake8: pip install flake8
-Bundle 'nvie/vim-flake8'
+" don't forget to rename jpythonfold.vim to python.vim
+Bundle 'jpythonfold.vim'
+Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mbbill/undotree'
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
 Bundle 'groenewege/vim-less'
 Bundle 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'hail2u/vim-css3-syntax'
-Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-markdown'
 Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
@@ -41,7 +43,7 @@ filetype plugin indent on     " required by vundle!
 
 " }}}
 
-" color and syntax {{{ 
+" color and syntax {{{
 
 " color syntax
 syntax on
@@ -49,40 +51,40 @@ set t_Co=256
 
 " fold text {{{
 if has("folding")
-  set foldtext=MyFoldText()
-  function! MyFoldText()
-    " for now, just don't try if version isn't 7 or higher
-    if v:version < 701
-      return foldtext()
-    endif
-    " clear fold from fillchars to set it up the way we want later
-    let &l:fillchars = substitute(&l:fillchars,',\?fold:.','','gi')
-    let l:numwidth = (v:version < 701 ? 8 : &numberwidth)
-    if &fdm=='diff'
-      let l:linetext=''
-      let l:foldtext='---------- '.(v:foldend-v:foldstart+1).' lines the same ----------'
-      let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
-      let l:align = (l:align / 2) + (strlen(l:foldtext)/2)
-      " note trailing space on next line
-      setlocal fillchars+=fold:\ 
-    elseif !exists('b:foldpat') || b:foldpat==0
-      let l:foldtext = ' '.(v:foldend-v:foldstart).' lines folded'.v:folddashes.'|'
-      let l:endofline = (&textwidth>0 ? &textwidth : 80)
-      let l:linetext = strpart(getline(v:foldstart),0,l:endofline-strlen(l:foldtext))
-      let l:align = l:endofline-strlen(l:linetext)
-      setlocal fillchars+=fold:-
-    elseif b:foldpat==1
-      let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
-      let l:foldtext = ' '.v:folddashes
-      let l:linetext = substitute(getline(v:foldstart),'\s\+$','','')
-      let l:linetext .= ' ---'.(v:foldend-v:foldstart-1).' lines--- '
-      let l:linetext .= substitute(getline(v:foldend),'^\s\+','','')
-      let l:linetext = strpart(l:linetext,0,l:align-strlen(l:foldtext))
-      let l:align -= strlen(l:linetext)
-      setlocal fillchars+=fold:-
-    endif
-    return printf('%s%*s', l:linetext, l:align, l:foldtext)
-  endfunction
+    set foldtext=MyFoldText()
+    function! MyFoldText()
+        " for now, just don't try if version isn't 7 or higher
+        if v:version < 701
+            return foldtext()
+        endif
+        " clear fold from fillchars to set it up the way we want later
+        let &l:fillchars = substitute(&l:fillchars,',\?fold:.','','gi')
+        let l:numwidth = (v:version < 701 ? 8 : &numberwidth)
+        if &fdm=='diff'
+            let l:linetext=''
+            let l:foldtext='---------- '.(v:foldend-v:foldstart+1).' lines the same ----------'
+            let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
+            let l:align = (l:align / 2) + (strlen(l:foldtext)/2)
+            " note trailing space on next line
+            setlocal fillchars+=fold:\
+        elseif !exists('b:foldpat') || b:foldpat==0
+            let l:foldtext = ' '.(v:foldend-v:foldstart).' lines folded'.v:folddashes.'|'
+            let l:endofline = (&textwidth>0 ? &textwidth : 80)
+            let l:linetext = strpart(getline(v:foldstart),0,l:endofline-strlen(l:foldtext))
+            let l:align = l:endofline-strlen(l:linetext)
+            setlocal fillchars+=fold:-
+        elseif b:foldpat==1
+            let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
+            let l:foldtext = ' '.v:folddashes
+            let l:linetext = substitute(getline(v:foldstart),'\s\+$','','')
+            let l:linetext .= ' ---'.(v:foldend-v:foldstart-1).' lines--- '
+            let l:linetext .= substitute(getline(v:foldend),'^\s\+','','')
+            let l:linetext = strpart(l:linetext,0,l:align-strlen(l:foldtext))
+            let l:align -= strlen(l:linetext)
+            setlocal fillchars+=fold:-
+        endif
+        return printf('%s%*s', l:linetext, l:align, l:foldtext)
+    endfunction
 endif
 " }}}
 
@@ -123,19 +125,31 @@ set statusline=\
 set ruler
 set rulerformat=%-50(%=%M%H%R\ %f%<\ (%n)%4(%)%Y:%{&tw}%9(%l,%c%V%)%4(%)%P%)
 
-" remove useless line number set by python-mode
-au BufRead,BufNewFile *.py set nonumber
+" put ⋅ for space at the end of line
+" | for tabs
+" ˽ for non breakable space
+set list
+set listchars=tab:\|\ ,trail:⋅,nbsp:˽
+
+" always expand tabs to 4 space
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
 " Language syntax indent
-autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
+autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab
+autocmd FileType css setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType xml setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType mako setlocal shiftwidth=2 tabstop=2 expandtab
+" Language Automatically removing all trailing whitespace
+autocmd FileType python,javascript,css,html,xml,htmldjango,mako,vim autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
 au Filetype vim set foldmethod=marker
-au Filetype python set foldtext=MyFoldText()
 
 " minimum number of line under and above the cursor
 set scrolloff=5
@@ -191,9 +205,13 @@ let g:jedi#popup_on_dot = 0
 " supertab depend on context, usefull to complete snipet and python methodes
 let g:SuperTabDefaultCompletionType = "context"
 
-" just be less pep8 nazi
-let g:flake8_max_line_length=99
-let g:flake8_max_complexity=10
+" syntastic
+" don't forget to install flake8: pip install flake8
+let g:syntastic_python_checkers=['flake8']
+" ignore line width for syntax checking and add more complexity
+let g:syntastic_python_checker_args='--ignore=E501 --max-complexity 12'
+let g:syntastic_auto_loc_list=1
+let g:syntastic_loc_list_height=5
 
 " }}}
 
@@ -201,7 +219,7 @@ let g:flake8_max_complexity=10
 " thanks to TWal https://github.com/TWal
 
 if isdirectory($HOME . '/.vim/backup') == 0
-	:silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
+    :silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
 endif
 set backupdir-=.
 set backupdir+=.
@@ -211,7 +229,7 @@ set backup
 
 " Save swp files to a less annoying place than the current directory.
 if isdirectory($HOME . '/.vim/swap') == 0
-	:silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+    :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
 endif
 set directory=~/.vim/swap//
 set directory+=.
@@ -220,13 +238,13 @@ set directory+=.
 set viminfo+=n~/.vim/viminfo
 
 if exists("+undofile")
-	" undofile - This allows you to use undos after exiting and restarting
-	if isdirectory($HOME . '/.vim/undo') == 0
-		:silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
-	endif
-	set undodir=~/.vim/undo//
-	set undodir=~/.vim/undo//
-	set undofile
+    " undofile - This allows you to use undos after exiting and restarting
+    if isdirectory($HOME . '/.vim/undo') == 0
+        :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+    endif
+    set undodir=~/.vim/undo//
+    set undodir=~/.vim/undo//
+    set undofile
 endif
 
 " }}}
