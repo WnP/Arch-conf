@@ -208,10 +208,15 @@ let g:SuperTabDefaultCompletionType = "context"
 " syntastic
 " don't forget to install flake8: pip install flake8
 let g:syntastic_python_checkers=['flake8']
-" ignore line width for syntax checking and add more complexity
-let g:syntastic_python_checker_args='--ignore=E501 --max-complexity 12'
 let g:syntastic_auto_loc_list=1
 let g:syntastic_loc_list_height=5
+" ignore line width for syntax checking and add more complexity
+" add the following in ~/.config/flake8
+"
+" [flake8]
+" ignore = E501
+" max-line-length = 100
+" max-complexity = 10
 
 " }}}
 
