@@ -142,7 +142,7 @@ set scrolloff=5
 " Key map and Plugin conf {{{
 
 " remap the leader default: '\'
-let mapleader='!'
+let mapleader=';'
 
 " map jk for exit insert mode
 imap jk <ESC>
