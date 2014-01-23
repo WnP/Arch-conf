@@ -1,7 +1,3 @@
-!UXTerm*faceName: Terminus
-! Source Code Pro for Powerline
-!UXTerm*faceSize: 12
-
 !URxvt.font: xft:Terminus-12
 ! =============== X.org default configurations =================
 ! file:     ~/.Xresources
