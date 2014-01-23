@@ -1,0 +1,94 @@
+!UXTerm*faceName: Terminus
+! Source Code Pro for Powerline
+!UXTerm*faceSize: 12
+
+!URxvt.font: xft:Terminus-12
+! =============== X.org default configurations =================
+! file:     ~/.Xresources
+! authors:  Willy Goiffon, Steeve Chailloux
+! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! ==============================================================
+
+! Terminal colors (dark) ---------------------------------------
+URxvt*background:[90]#221a17
+URxvt*foreground:#b3b4b1
+
+*color0:    #222222
+*color1:    #784742
+*color2:    #427363
+*color3:    #665847
+*color4:    #6a708b
+*color5:    #7a378b
+*color6:    #52707b
+*color7:    #b3b4b1
+
+*color8:    #5c4c4c
+*color9:    #d43f10
+*color10:   #cef318
+*color11:   #ede265
+*color12:   #6ac0fd
+*color13:   #ef79ae
+*color14:   #49d4dd
+*color15:   #ffffff
+
+! URxvt (rxvt-unicode) -----------------------------------------
+
+URxvt*termName:             rxvt-256color
+URxvt*loginShell:           false
+URxvt*saveLines:            1024
+URxvt*geometry:             81x20
+URxvt*depth:                32
+URxvt*font:                 -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
+URxvt*boldFont:             -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
+URxvt*scrollBar:            false
+URxvt*cursorBlink:          false
+URxvt*cursorColor:          #5c4c4c
+URxvt*internalBorder:       2
+URxvt*perl-ext-common:      default,url-select,keyboard-select,tabbedex,clipboard
+URxvt.url-select.launcher:  /usr/bin/dwb
+URxvt.url-select.underline: true
+URxvt.keysym.Control-u:           perl:url-select:select_next
+URxvt.keysym.Control-v:           perl:keyboard-select:activate
+URxvt.tabbed.new-button:    true
+URxvt.tabbed.autohide:      true
+URXvt.tabbed.reopen-on-close: yes
+URxvt.keysym.S-C-V:         perl:clipboard:paste
+URxvt.clipboard.autocopy:   true
+
+! Colored man pages
+URxvt.colorIT:              #cacaca
+URxvt.colorBD:              #eee685
+URxvt.colorUL:              #a28c64
+
+! XTerm ---------------------------------------------------------
+
+xterm*background:#222222
+xterm*foreground:#e8e9ca
+xterm*scrollBar:         false
+xterm*faceName:          tamsyn
+xterm*faceSize:          8
+xterm*boldMode:          false
+xterm*cutNewline:        false
+xterm*on4Clicks:         group
+xterm*on5Clicks:         page
+xterm*internalBorder:    8
+xterm*metaSendsEscape:   true
+xterm*colorBD:           #ffffff
+xterm*colorBDMode:       true
+xterm*cursorBlink:       false
+xterm*cursorColor:       #e8e9ca
+xterm*veryBoldColors:    14
+xterm*loginShell:        true
+xterm*charClass:         33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48,35:48,58:48,63:48,61:48,44:48,38:48,59:48
+xterm*jumpScroll:        true
+xterm*multiScroll:       true
+xterm*saveLines:         512
+
+xclock*background:      #efefe5
+xclock*face:            Archivo Narrow-16
+xclock*foreground:      #4a708b
+xclock*analog:          false
+xclock*geometry:        +1280+860
+xclock*strftime:        %a %d/%m   %H:%M
+xclock*update:          30
+
