@@ -10,19 +10,13 @@
 PS1='\[\e[0;34m\]├──\[\e[1;35m\]| \[\e[0;36m\]\u\[\e[0;34m\] \[\e[1;35m\]|\[\e[0;34m\]─\[\e[1;35m\]| \[\e[0;32m\]\w\[\e[0;34m\] \[\e[1;35m\]|\n\[\e[0;34m\] └─\[\e[1;35m\]| \[\e[1;32m\]\A\[\e[0;34m\] \[\e[1;35m\]|\[\e[0;34m\]──\[\e[1;35m\]╼ \[\e[0m\] '
 # \[\e[1;36m\] '
 
-alias ls='ls --color=auto'
-alias ll='ls -l --color=auto'
-alias la='ls -a --color=auto'
-alias lll='ls -l --color=auto | more'
-alias grep='grep --color=auto -d skip'
+alias l='ls -Gal'
+alias ls='ls -G'
+alias ll='ls -l -G'
+alias la='ls -a -G'
+alias lll='ls -l -G | more'
+alias grep='grep -G -d skip'
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
-
-rel="$(lsb_release -is)"
-if [[ "${rel}" == "arch" ]]; then
-	alias pacman='sudo pacman-color'
-	alias systemctl='sudo systemctl'
-fi
-
 complete -cf sudo
 complete -cf man
 
@@ -52,6 +46,8 @@ export HISTFILESIZE=50000
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
+$PATH=/usr/locale/bin:$PATH
+export PATH=$PATH
 # Fin Gestion History ###########
 #################################
 

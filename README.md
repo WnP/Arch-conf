@@ -1,10 +1,6 @@
 Arch-conf
 =========
 
-> my archlinux conf files
-
-    #!/usr/bin/env python
-
-I really enjoy `python` ^_^
+My Archlinux dot files
 
 ![Arch-logo](http://github.com/WnP/Arch-conf/raw/master/allogo.jpg)

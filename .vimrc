@@ -1,4 +1,5 @@
 set nocompatible               " be iMproved
+set modeline
 
 " vundle conf {{{
 
@@ -14,6 +15,10 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
+Bundle 'davidhalter/jedi-vim'
+" don't forget to rename jpythonfold.vim to python.vim
+Bundle 'jpythonfold.vim'
+Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mbbill/undotree'
 Bundle 'tpope/vim-fugitive'
@@ -27,10 +32,12 @@ Bundle 'hail2u/vim-css3-syntax'
 Bundle 'tpope/vim-markdown'
 Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
-Bundle 'davidhalter/jedi-vim'
-" don't forget to rename jpythonfold.vim to python.vim
-Bundle 'jpythonfold.vim'
-Bundle 'scrooloose/syntastic'
+Bundle 'ervandew/supertab'
+" snippet
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
 
 filetype plugin indent on     " required by vundle!
 
@@ -152,7 +159,7 @@ set scrolloff=5
 " Key map and Plugin conf {{{
 
 " remap the leader default: '\'
-let mapleader='!'
+let mapleader=';'
 
 " map jk for exit insert mode
 imap jk <ESC>
@@ -192,14 +199,24 @@ imap <down> <esc>
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
 
-" Maximum allowed mccabe complexity
-let g:pymode_lint_mccabe_complexity = 12
+" vim jedi don't auto start completion
+let g:jedi#popup_on_dot = 0
+
+" supertab depend on context, usefull to complete snipet and python methodes
+let g:SuperTabDefaultCompletionType = "context"
 
 " syntastic
-" -> don't forget: pip install flake8
+" don't forget to install flake8: pip install flake8
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_auto_loc_list=1
 let g:syntastic_loc_list_height=5
+" ignore line width for syntax checking and add more complexity
+" add the following in ~/.config/flake8
+"
+" [flake8]
+" ignore = E501
+" max-line-length = 100
+" max-complexity = 10
 
 " }}}
 
@@ -245,4 +262,4 @@ set incsearch " Incremental search, start searching will typing patern
 
 " }}}
 
-" vim: fdm=marker
+" vim: set fdm=marker set fenc=utf-8
