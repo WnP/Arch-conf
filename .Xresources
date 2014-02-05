@@ -28,26 +28,26 @@ URxvt*foreground:#b3b4b1
 
 ! URxvt (rxvt-unicode) -----------------------------------------
 
-URxvt*termName:             rxvt-256color
-URxvt*loginShell:           false
-URxvt*saveLines:            1024
-URxvt*geometry:             81x20
-URxvt*depth:                32
-URxvt*font:                 -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
-URxvt*boldFont:             -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
-URxvt*scrollBar:            false
-URxvt*cursorBlink:          false
-URxvt*cursorColor:          #5c4c4c
-URxvt*internalBorder:       2
-URxvt*perl-ext-common:      default,url-select,keyboard-select,tabbedex,clipboard
-URxvt.url-select.launcher:  /usr/bin/dwb
-URxvt.url-select.underline: true
-URxvt.keysym.Mod4-g:           perl:url-select:select_next
-URxvt.keysym.Mod4-v:           perl:keyboard-select:activate
-URxvt.tabbed.new-button:    true
-URxvt.tabbed.autohide:      true
+URxvt*termName:               rxvt-256color
+URxvt*loginShell:             false
+URxvt*saveLines:              1024
+URxvt*geometry:               81x20
+URxvt*depth:                  32
+URxvt*font:                   -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
+URxvt*boldFont:               -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
+URxvt*scrollBar:              false
+URxvt*cursorBlink:            false
+URxvt*cursorColor:            #5c4c4c
+URxvt*internalBorder:         2
+URxvt*perl-ext-common:        default,url-select,keyboard-select,tabbedex,clipboard
+URxvt.url-select.launcher:    /usr/bin/dwb
+URxvt.url-select.underline:   true
+URxvt.keysym.Mod4-g:          perl:url-select:select_next
+URxvt.keysym.Mod4-v:          perl:keyboard-select:activate
+URxvt.tabbed.new-button:      true
+URxvt.tabbed.autohide:        true
 URXvt.tabbed.reopen-on-close: yes
-URxvt.clipboard.autocopy:   true
+URxvt.clipboard.autocopy:     true
 
 ! Colored man pages
 URxvt.colorIT:              #cacaca
