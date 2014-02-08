@@ -43,6 +43,9 @@ alias umount='sudo umount'
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 alias tmux='TERM=xterm-256color tmux -2'
 alias ta='tmux attach-session -t '
+alias mkdir='mkdir -pv'
+alias vi=vim
+alias svi='sudo vi'
 alias us='setxkbmap us -option compose:ralt'
 
 
