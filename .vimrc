@@ -32,6 +32,7 @@ Bundle 'hail2u/vim-css3-syntax'
 Bundle 'tpope/vim-markdown'
 Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
+Bundle 'ajford/vimkivy'
 Bundle 'ervandew/supertab'
 " snippet
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -195,6 +196,11 @@ imap <right> <esc>
 imap <left> <esc>
 imap <up> <esc>
 imap <down> <esc>
+
+" read all file in hexa
+nmap <leader>h :%!xxd<cr>
+" return to binary
+nmap <leader>H :%!xxd -r<cr>
 
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
