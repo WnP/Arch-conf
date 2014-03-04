@@ -166,8 +166,8 @@ let mapleader=';'
 imap jk <ESC>
 
 " GitGutter - navig through git diff
-nmap <leader>h <Plug>GitGutterNextHunk
-nmap <leader>H <Plug>GitGutterPrevHunk
+nmap <leader>c <Plug>GitGutterNextHunk
+nmap <leader>C <Plug>GitGutterPrevHunk
 
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
