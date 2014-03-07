@@ -14,6 +14,10 @@ call vundle#rc()
 " required it's vundle!
 Bundle 'gmarik/vundle'
 
+" Games
+Bundle 'TeTrIs.vim'
+Bundle 'sokoban.vim'
+
 " My Bundles here:
 Bundle 'davidhalter/jedi-vim'
 " don't forget to rename jpythonfold.vim to python.vim
