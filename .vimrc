@@ -36,6 +36,7 @@ Bundle 'hail2u/vim-css3-syntax'
 Bundle 'tpope/vim-markdown'
 Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
+Bundle 'ajford/vimkivy'
 Bundle 'ervandew/supertab'
 " snippet
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -169,8 +170,8 @@ let mapleader=';'
 imap jk <ESC>
 
 " GitGutter - navig through git diff
-nmap <leader>h <Plug>GitGutterNextHunk
-nmap <leader>H <Plug>GitGutterPrevHunk
+nmap <leader>c <Plug>GitGutterNextHunk
+nmap <leader>C <Plug>GitGutterPrevHunk
 
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
@@ -199,6 +200,11 @@ imap <right> <esc>
 imap <left> <esc>
 imap <up> <esc>
 imap <down> <esc>
+
+" read all file in hexa
+nmap <leader>h :%!xxd<cr>
+" return to binary
+nmap <leader>H :%!xxd -r<cr>
 
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
