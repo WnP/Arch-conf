@@ -38,11 +38,15 @@ Bundle 'sophacles/vim-bundle-mako'
 Bundle 'vim-scripts/django.vim'
 Bundle 'ajford/vimkivy'
 Bundle 'ervandew/supertab'
+Bundle 'c.vim'
+Bundle 'lilydjwg/colorizer'
 " snippet
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
+Bundle 'sudar/vim-arduino-syntax'
+Bundle 'kunstmusik/csound-vim'
 
 filetype plugin indent on     " required by vundle!
 
@@ -150,10 +154,11 @@ autocmd FileType xml setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType mako setlocal shiftwidth=2 tabstop=2 expandtab
 " Language Automatically removing all trailing whitespace
-autocmd FileType python,javascript,css,html,xml,htmldjango,mako,vim autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType python,c,javascript,css,html,xml,htmldjango,mako,vim autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
+au Filetype c set foldmethod=syntax
 au Filetype vim set foldmethod=marker
 
 " minimum number of line under and above the cursor

@@ -40,7 +40,7 @@ URxvt*cursorBlink:            false
 URxvt*cursorColor:            #5c4c4c
 URxvt*internalBorder:         2
 URxvt*perl-ext-common:        default,url-select,keyboard-select,tabbedex,clipboard
-URxvt.url-select.launcher:    /usr/bin/dwb
+URxvt.url-select.launcher:    xdg-open
 URxvt.url-select.underline:   true
 URxvt.keysym.Mod4-g:          perl:url-select:select_next
 URxvt.keysym.Mod4-v:          perl:keyboard-select:activate

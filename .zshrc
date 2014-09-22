@@ -45,12 +45,15 @@ alias tmux='TERM=xterm-256color tmux -2'
 alias ta='tmux attach-session -t '
 alias mkdir='mkdir -pv'
 alias vi=vim
-alias svi='sudo vi'
-alias us='setxkbmap us -option compose:ralt'
+alias svi='sudo vim'
+alias svi='sudo vim'
+#alias us='setxkbmap us -option compose:ralt'
+alias us='env LANG=en_US.UTF-8'
+alias ctrlcaps='setxkbmap -option ctrl:nocaps 2>/dev/null'
 
 
 export EDITOR='vim'
-export PATH=$PATH:/home/scl/.gem/ruby/2.0.0/bin
+export PATH=$PATH:/home/scl/.gem/ruby/2.0.0/bin:/home/scl/.cabal/bin
 #export GEM_HOME=~/.gem/ruby/2.0.0
 
 # Tips #######################################
