@@ -40,13 +40,14 @@ Bundle 'ajford/vimkivy'
 Bundle 'ervandew/supertab'
 Bundle 'c.vim'
 Bundle 'lilydjwg/colorizer'
+Bundle 'sjbach/lusty'
+Bundle 'sudar/vim-arduino-syntax'
+Bundle 'kunstmusik/csound-vim'
 " snippet
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
-Bundle 'sudar/vim-arduino-syntax'
-Bundle 'kunstmusik/csound-vim'
 
 filetype plugin indent on     " required by vundle!
 
@@ -54,9 +55,12 @@ filetype plugin indent on     " required by vundle!
 
 " color and syntax {{{
 
-" color syntax
+" colors and syntax
 syntax on
 set t_Co=256
+set wrap " show long lines on many lines
+set title " update term title
+set hidden
 
 " fold text {{{
 if has("folding")
@@ -97,6 +101,8 @@ if has("folding")
 endif
 " }}}
 
+" Colors {{{
+
 " set fold color
 highlight Folded ctermfg=DarkBlue ctermbg=232
 
@@ -126,6 +132,10 @@ hi MatchParen cterm=bold ctermbg=0 ctermfg=none
 highlight statusline ctermbg=0 ctermfg=0
 highlight StatusLineNC ctermbg=0 ctermfg=0
 
+" }}}
+
+" Editor ui {{{
+
 " remove statusline
 set laststatus=0
 set statusline=\
@@ -145,6 +155,13 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" minimum number of line under and above the cursor
+set scrolloff=5
+
+" }}}
+
+" language specs {{{
+
 " Language syntax indent
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab
@@ -161,18 +178,13 @@ au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=ind
 au Filetype c set foldmethod=syntax
 au Filetype vim set foldmethod=marker
 
-" minimum number of line under and above the cursor
-set scrolloff=5
+" }}}
 
 " }}}
 
 " Key map and Plugin conf {{{
 
-" remap the leader default: '\'
-let mapleader=';'
-
-" map jk for exit insert mode
-imap jk <ESC>
+" Plugin & nav {{{
 
 " GitGutter - navig through git diff
 nmap <leader>c <Plug>GitGutterNextHunk
@@ -185,34 +197,48 @@ nnoremap <leader>u :UndotreeToggle<cr>
 nnoremap <leader>e :NERDTreeToggle<cr>
 let NERDTreeQuitOnOpen=1
 
-" usefull for search, centering the result
-nnoremap n nzz
-nnoremap N Nzz
-
 " tab keys
 map <leader>tn :tabnew<cr>
 map <leader>tc :tabclose<CR>
-
-" paste
-set pastetoggle=<leader>p
-
-" don't use arrow keys
-map <right> <esc>
-map <left> <esc>
-map <up> <esc>
-map <down> <esc>
-imap <right> <esc>
-imap <left> <esc>
-imap <up> <esc>
-imap <down> <esc>
 
 " read all file in hexa
 nmap <leader>h :%!xxd<cr>
 " return to binary
 nmap <leader>H :%!xxd -r<cr>
 
+" paste
+set pastetoggle=<leader>p
+
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
+
+" }}}
+
+" usefull tricks {{{
+
+" remap the leader default: '\'
+let mapleader=';'
+
+" map jk for exit insert mode
+imap jk <ESC>
+
+" usefull for search, centering the result
+nnoremap n nzz
+nnoremap N Nzz
+
+" don't use arrow keys
+map <right> <nop>
+map <left> <nop>
+map <up> <nop>
+map <down> <nop>
+imap <right> <nop>
+imap <left> <nop>
+imap <up> <nop>
+imap <down> <nop>
+
+" }}}
+
+" Plugin conf {{{
 
 " vim jedi don't auto start completion
 let g:jedi#popup_on_dot = 0
@@ -232,6 +258,8 @@ let g:syntastic_loc_list_height=5
 " ignore = E501
 " max-line-length = 100
 " max-complexity = 10
+
+" }}}
 
 " }}}
 
@@ -274,6 +302,39 @@ endif
 set ignorecase " Do case insensitive matching
 set smartcase " Do smart case matching, search case sensitive if at least one upercase in the patern
 set incsearch " Incremental search, start searching will typing patern
+set hlsearch
+
+" }}}
+
+" Plugin Memo {{{
+
+" lusty-explorer {{{
+"
+" <Leader>lf  - Opens filesystem explorer.
+" <Leader>lr  - Opens filesystem explorer at the directory of the current file.
+" <Leader>lb  - Opens buffer explorer.
+" <Leader>lg  - Opens buffer grep.
+"
+" }}}
+
+" lusty-juggler {{{
+"
+" <Leader>lj  - Launch the juggler with this key combo
+"
+" The buffer names are mapped to these keys:
+"
+"       1st --> a or 1
+"       2nd --> s or 2
+"       3rd --> d or 3
+"       4th --> f or 4
+"       5th --> g or 5
+"       6th --> h or 6
+"       7th --> j or 7
+"       8th --> k or 8
+"       9th --> l or 9
+"       10th --> ; or 0
+"
+" }}}
 
 " }}}
 

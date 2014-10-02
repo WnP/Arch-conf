@@ -48,10 +48,8 @@ URxvt.tabbed.new-button:      true
 URxvt.tabbed.autohide:        true
 URXvt.tabbed.reopen-on-close: yes
 URxvt.clipboard.autocopy:     true
-! this makes urxvt to start faster?!
-urxvt*preeditType:            Root
-! make compose key always working
-URxvt.preeditType:            OffTheSpot
+! fix compose key issue
+urxvt*preeditType:            OverTheSpot,Root,None
 
 ! Colored man pages
 URxvt.colorIT:              #cacaca
