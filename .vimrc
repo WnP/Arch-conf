@@ -23,7 +23,8 @@ Bundle 'davidhalter/jedi-vim'
 " don't forget to rename jpythonfold.vim to python.vim
 Bundle 'jpythonfold.vim'
 Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
+" Bundle 'scrooloose/nerdtree'
+Bundle 'sjbach/lusty'
 Bundle 'mbbill/undotree'
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
@@ -40,9 +41,9 @@ Bundle 'ajford/vimkivy'
 Bundle 'ervandew/supertab'
 Bundle 'c.vim'
 Bundle 'lilydjwg/colorizer'
-Bundle 'sjbach/lusty'
 Bundle 'sudar/vim-arduino-syntax'
 Bundle 'kunstmusik/csound-vim'
+Bundle 'mileszs/ack.vim'
 " snippet
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -184,36 +185,6 @@ au Filetype vim set foldmethod=marker
 
 " Key map and Plugin conf {{{
 
-" Plugin & nav {{{
-
-" GitGutter - navig through git diff
-nmap <leader>c <Plug>GitGutterNextHunk
-nmap <leader>C <Plug>GitGutterPrevHunk
-
-" UndoTree
-nnoremap <leader>u :UndotreeToggle<cr>
-
-" NeerdTree
-nnoremap <leader>e :NERDTreeToggle<cr>
-let NERDTreeQuitOnOpen=1
-
-" tab keys
-map <leader>tn :tabnew<cr>
-map <leader>tc :tabclose<CR>
-
-" read all file in hexa
-nmap <leader>h :%!xxd<cr>
-" return to binary
-nmap <leader>H :%!xxd -r<cr>
-
-" paste
-set pastetoggle=<leader>p
-
-" upload to sprunge.us
-command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
-
-" }}}
-
 " usefull tricks {{{
 
 " remap the leader default: '\'
@@ -235,6 +206,42 @@ imap <right> <nop>
 imap <left> <nop>
 imap <up> <nop>
 imap <down> <nop>
+
+" }}}
+
+" Plugin keys & nav {{{
+
+" GitGutter - navig through git diff
+nmap <leader>c <Plug>GitGutterNextHunk
+nmap <leader>C <Plug>GitGutterPrevHunk
+
+" UndoTree
+nnoremap <leader>u :UndotreeToggle<cr>
+
+" NeerdTree
+"nnoremap <leader>e :NERDTreeToggle<cr>
+"let NERDTreeQuitOnOpen=1
+
+" tab keys
+map <leader>tn :tabnew<cr>
+map <leader>tc :tabclose<CR>
+
+" read all file in hexa
+nmap <leader>h :%!xxd<cr>
+" return to binary
+nmap <leader>H :%!xxd -r<cr>
+
+" paste
+set pastetoggle=<leader>p
+
+" upload to sprunge.us
+command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
+
+" ack
+let g:ackprg="ack -H --nocolor --nogroup --column"
+nmap <leader>f mA:Ack<space>
+nmap <leader>fa mA:Ack "<C-r>=expand("<cword>")<cr>"
+nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
 
 " }}}
 
