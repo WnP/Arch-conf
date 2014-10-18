@@ -47,15 +47,22 @@ alias mkdir='mkdir -pv'
 alias vi=vim
 alias svi='sudo vim'
 alias svi='sudo vim'
+# quit evilwm, could use ctrl-alt-backspace too
 alias quit='kill $(ps ax|grep evilwm|grep -v grep|cut -d " " -f 2 )'
-#alias us='setxkbmap us -option compose:ralt'
+# show image -dir or file-
+alias show='feh'
+# share image on imgur
+alias share='imgur'
+# usefull to show program output in english
 alias us='env LANG=en_US.UTF-8'
+# laptop: asign control signal to caps-lock key
 alias ctrlcaps='setxkbmap -option ctrl:nocaps 2>/dev/null'
+# full screen shot
+alias shotall='scrot -z -c -d 2 ~/Pictures/%Y-%m-%d-%T-screenshot.png'
 
 
 export EDITOR='vim'
 export PATH=$PATH:/home/scl/.gem/ruby/2.0.0/bin:/home/scl/.cabal/bin
-#export GEM_HOME=~/.gem/ruby/2.0.0
 
 MAIL=/var/spool/mail/scl && export MAIL
 

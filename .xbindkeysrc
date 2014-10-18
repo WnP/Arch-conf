@@ -66,31 +66,28 @@
 #  Control + b:2 + Release
 
 "gmrun"
-  Mod2 + Menu
+  Menu
 
 "firefox"
-  Mod2 + XF86HomePage
+  XF86HomePage
 
 "urxvt -e bc"
-  Mod2 + XF86Calculator
+  XF86Calculator
 
 "urxvt -e scrot -z -c -u -d 2 ~/Pictures/%Y-%m-%d-%T-screenshot.png"
-  Mod2 + Print
-
-"scrot -z -c -d 2 ~/Pictures/%Y-%m-%d-%T-screenshot.png"
-  Shift+Mod2 + Print
+  Print
 
 "urxvt -e scrot -z -s ~/Pictures/%Y-%m-%d-%T-screenshot.png"
-  Mod2+Mod4 + Print
+  Mod4 + Print
 
-"amixer -c 1 set Master 5+"
-  Mod2 + XF86AudioRaiseVolume
+"amixer set Master 5+"
+  XF86AudioRaiseVolume
 
-"amixer -c 1 set Master 5-"
-  Mod2 + XF86AudioLowerVolume
+"amixer set Master 5-"
+  XF86AudioLowerVolume
 
-"amixer -c 1 set Master toggle"
-  Mod2 + XF86AudioMut
+"amixer set Master toggle"
+  XF86AudioMute
 
 ##################################
 # End of xbindkeys configuration #
