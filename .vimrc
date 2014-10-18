@@ -44,6 +44,7 @@ Bundle 'lilydjwg/colorizer'
 Bundle 'sudar/vim-arduino-syntax'
 Bundle 'kunstmusik/csound-vim'
 Bundle 'mileszs/ack.vim'
+Bundle 'itchyny/calendar.vim'
 " snippet
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -265,6 +266,10 @@ let g:syntastic_loc_list_height=5
 " ignore = E501
 " max-line-length = 100
 " max-complexity = 10
+
+" Calendar
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
 
 " }}}
 

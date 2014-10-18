@@ -47,6 +47,7 @@ alias mkdir='mkdir -pv'
 alias vi=vim
 alias svi='sudo vim'
 alias svi='sudo vim'
+alias quit='kill $(ps ax|grep evilwm|grep -v grep|cut -d " " -f 2 )'
 #alias us='setxkbmap us -option compose:ralt'
 alias us='env LANG=en_US.UTF-8'
 alias ctrlcaps='setxkbmap -option ctrl:nocaps 2>/dev/null'
@@ -56,6 +57,8 @@ export EDITOR='vim'
 export PATH=$PATH:/home/scl/.gem/ruby/2.0.0/bin:/home/scl/.cabal/bin
 #export GEM_HOME=~/.gem/ruby/2.0.0
 
+MAIL=/var/spool/mail/scl && export MAIL
+
 # Tips #######################################
 #                                            #
 # search lost file in all pkg : pacman -Qkq  #
@@ -64,5 +67,3 @@ export PATH=$PATH:/home/scl/.gem/ruby/2.0.0/bin:/home/scl/.cabal/bin
 # alsamixer CLI : amixer -c 0 set PCM 2dB+   #
 #                                            #
 ##############################################
-
-# Customize to your needs...

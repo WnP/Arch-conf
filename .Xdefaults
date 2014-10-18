@@ -47,7 +47,15 @@ URxvt.keysym.Mod4-v:          perl:keyboard-select:activate
 URxvt.tabbed.new-button:      true
 URxvt.tabbed.autohide:        true
 URXvt.tabbed.reopen-on-close: yes
+# required urxvt-perls-git
 URxvt.clipboard.autocopy:     true
+URxvt.keysym.Mod4-c:   perl:clipboard:copy
+URxvt.keysym.Mod4-p:   perl:clipboard:paste
+URxvt.keysym.Mod4-C-v: perl:clipboard:paste_escaped
+# required xclip
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+
 ! fix compose key issue
 urxvt*preeditType:            OverTheSpot,Root,None
 
