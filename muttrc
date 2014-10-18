@@ -1,0 +1,93 @@
+# basic .muttrc for use with Gmail
+
+# Change the following six lines to match your Gmail account details
+set imap_user = "steevechailloux@gmail.com"
+set imap_pass = ""
+set smtp_url = "smtps://steevechailloux@smtp.gmail.com:465/"
+set smtp_pass = ""
+set from = "steevechailloux@gmail.com"
+set realname = "Steeve Chailloux"
+#
+# # Change the following line to a different editor you prefer.
+set editor = 'vim + -c "set textwidth=72" -c "set wrap"'
+# Basic config
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set imap_check_subscribed=yes
+set hostname = gmail.com
+set mail_check = 60
+set timeout = 300
+set imap_keepalive = 300
+set postponed = "+[GMail]/Drafts"
+set certificate_file=~/.mutt/certificates
+set move = no
+set include
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+set pager_index_lines = 10
+
+# Store message headers locally to speed things up.
+# If hcache is a folder, Mutt will create sub cache folders for each account which may speeds things even more up.
+set header_cache = ~/.cache/mutt
+
+# Store messages locally to speed things up, like searching message bodies.
+# Can be the same folder as header_cache.
+# This will cost important disk usage according to your e-mail amount.
+set message_cachedir = "~/.cache/mutt"
+
+# Allow Mutt to open new imap connection automatically.
+unset imap_passive
+
+# gpg
+source ~/.mutt/gpg.rc
+
+# aliases
+set alias_file = "~/.mutt/aliases"
+set sort_alias = alias  # specifies which field to use to sort the alias list when displayed in Mutt. Possible values: alias, address.
+set reverse_alias = yes # sorts in reverse order if set to yes.
+source $alias_file      # tells Mutt to read aliases on startup. Needed for auto-completion.
+
+# auto encrypt reply to encrypted mail
+set pgp_replyencrypt=yes
+# verify key sign
+set pgp_verify_sig=yes
+
+set pager = less
+
+set mailcap_path = $HOME/.mailcap_mutt
+# Palette for use with the Linux console.  Black background.
+
+color hdrdefault blue black
+color quoted blue black
+color signature blue black
+color attachment red black
+color message brightred black
+color error brightred black
+color indicator black red
+color status brightgreen blue
+color tree white black
+color normal white black
+color markers red black
+color search white black
+color tilde brightmagenta black
+color index blue black ~F
+color index red black "~N|~O"
+
+color body brightwhite black '\*+[^*]+\*+'
+
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
+bind editor <Tab> complete-query
+bind editor ^T complete
+bind editor <space> noop
+# # Gmail-style keyboard shortcuts
+macro index,pager am "<enter-command>unset trash\n <delete-message>" "Gmail archive message" # different from Gmail, but wanted to keep "y" to show folders.
+macro index,pager d "<enter-command>set trash=\"imaps://imap.googlemail.com/[GMail]/Bin\"\n <delete-message>" "Gmail delete message"
+macro index,pager gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index,pager gl "<change-folder>?" "Go to 'Label'" # will take you to a list of all your Labels (similar to viewing folders).
+bind index gr group-reply          # reply to all recipients

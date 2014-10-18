@@ -1,0 +1,6 @@
+application/pdf; { set -m \; /bin/mv -T %s %s.mv \; ( evince %s.mv \; /bin/rm %s.mv \; ) & } \; disown -a
+image/*; { set -m \; /bin/mv -T %s %s.mv \; ( ristretto %s.mv \; /bin/rm %s.mv \; ) & } \; disown -a
+application/vnd.oasis.opendocument.text; { set -m \; /bin/mv -T %s %s.mv \; ( libreoffice %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a
+application/vnd.oasis.opendocument.graphics; { set -m \; /bin/mv -T %s %s.mv \; ( libreoffice %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a
+application/vnd.oasis.opendocument.spreadsheet; { set -m \; /bin/mv -T %s %s.mv \; ( libreoffice %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a
+application/vnd.oasis.opendocument.presentation; { set -m \; /bin/mv -T %s %s.mv \; ( libreoffice %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a
