@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-ZSH=/usr/share/oh-my-zsh/
+ZSH=~/.oh-my-zsh/
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -34,7 +34,7 @@ plugins=(git archlinux django github history history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
-alias grep='grep --color=always -d skip'
+# alias grep='grep --color=always -d skip'
 alias emacs='sudo emacs -nw'
 alias pacman='sudo pacman'
 alias systemctl='sudo systemctl'
@@ -47,6 +47,8 @@ alias mkdir='mkdir -pv'
 alias vi=vim
 alias svi='sudo vim'
 alias svi='sudo vim'
+# activate a python virtualenv named venv in the current dir
+alias activate='. ./venv/bin/activate'
 # quit evilwm, could use ctrl-alt-backspace too
 alias quit='kill $(ps ax|grep evilwm|grep -v grep|cut -d " " -f 2 )'
 # show image -dir or file-
@@ -59,10 +61,14 @@ alias us='env LANG=en_US.UTF-8'
 alias ctrlcaps='setxkbmap -option ctrl:nocaps 2>/dev/null'
 # full screen shot
 alias shotall='scrot -z -c -d 2 ~/Pictures/%Y-%m-%d-%T-screenshot.png'
+alias la='ls -a'
+alias sudo="LD_PRELOAD= sudo"
+alias man="LD_PRELOAD= man"
+# alias emerge="sudo emerge"
 
 
 export EDITOR='vim'
-export PATH=$PATH:/home/scl/.gem/ruby/2.0.0/bin:/home/scl/.cabal/bin
+export PATH=$PATH:/sbin:/home/scl/.gem/ruby/2.1.0/bin:/home/scl/.cabal/bin
 
 MAIL=/var/spool/mail/scl && export MAIL
 
@@ -74,3 +80,11 @@ MAIL=/var/spool/mail/scl && export MAIL
 # alsamixer CLI : amixer -c 0 set PCM 2dB+   #
 #                                            #
 ##############################################
+
+#archey3 --config=~/.config/archey3.cfg
+autoload -U compinit promptinit
+compinit
+promptinit; prompt gentoo
+
+alias grep="/bin/grep $GREP_OPTIONS"
+unset GREP_OPTIONS

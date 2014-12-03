@@ -4,53 +4,55 @@ set modeline
 " vundle conf {{{
 
 filetype off                   " required by vundle!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " }}}
 
 " bundles {{{
 
 " required it's vundle!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " Games
-Bundle 'TeTrIs.vim'
-Bundle 'sokoban.vim'
+Plugin 'TeTrIs.vim'
+Plugin 'sokoban.vim'
 
-" My Bundles here:
-Bundle 'davidhalter/jedi-vim'
+" My Plugins here:
+Plugin 'davidhalter/jedi-vim'
 " don't forget to rename jpythonfold.vim to python.vim
-Bundle 'jpythonfold.vim'
-Bundle 'scrooloose/syntastic'
-" Bundle 'scrooloose/nerdtree'
-Bundle 'sjbach/lusty'
-Bundle 'mbbill/undotree'
-Bundle 'tpope/vim-fugitive'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
-Bundle 'groenewege/vim-less'
-Bundle 'pangloss/vim-javascript'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'hail2u/vim-css3-syntax'
-Bundle 'tpope/vim-markdown'
-Bundle 'sophacles/vim-bundle-mako'
-Bundle 'vim-scripts/django.vim'
-Bundle 'ajford/vimkivy'
-Bundle 'ervandew/supertab'
-Bundle 'c.vim'
-Bundle 'lilydjwg/colorizer'
-Bundle 'sudar/vim-arduino-syntax'
-Bundle 'kunstmusik/csound-vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'itchyny/calendar.vim'
+Plugin 'jpythonfold.vim'
+Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/nerdtree'
+Plugin 'sjbach/lusty'
+Plugin 'mbbill/undotree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'groenewege/vim-less'
+Plugin 'pangloss/vim-javascript'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'tpope/vim-markdown'
+Plugin 'sophacles/vim-bundle-mako'
+Plugin 'vim-scripts/django.vim'
+Plugin 'ajford/vimkivy'
+Plugin 'ervandew/supertab'
+Plugin 'c.vim'
+Plugin 'lilydjwg/colorizer'
+Plugin 'sudar/vim-arduino-syntax'
+Plugin 'kunstmusik/csound-vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'itchyny/calendar.vim'
+Plugin 'tpope/vim-haml'
 " snippet
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 
+call vundle#end()             " required by vundle!
 filetype plugin indent on     " required by vundle!
 
 " }}}
@@ -168,7 +170,7 @@ set scrolloff=5
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType css setlocal shiftwidth=4 tabstop=4 expandtab
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType html,xhtml setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType xml setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType mako setlocal shiftwidth=2 tabstop=2 expandtab
@@ -189,7 +191,7 @@ au Filetype vim set foldmethod=marker
 " usefull tricks {{{
 
 " remap the leader default: '\'
-let mapleader=';'
+"let mapleader=';'
 
 " map jk for exit insert mode
 imap jk <ESC>
@@ -197,6 +199,11 @@ imap jk <ESC>
 " usefull for search, centering the result
 nnoremap n nzz
 nnoremap N Nzz
+
+" buffer next & prev...
+" do you realy need C-n and C-p in normal mode?!?
+nnoremap <C-p> :bp<CR>
+nnoremap <C-n> :bn<CR>
 
 " don't use arrow keys
 map <right> <nop>
@@ -225,7 +232,7 @@ nnoremap <leader>u :UndotreeToggle<cr>
 
 " tab keys
 map <leader>tn :tabnew<cr>
-map <leader>tc :tabclose<CR>
+" map <leader>tc :tabclose<CR>
 
 " read all file in hexa
 nmap <leader>h :%!xxd<cr>

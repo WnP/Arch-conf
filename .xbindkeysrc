@@ -64,9 +64,12 @@
 ## Control + mouse button 2 release event starts rxvt
 #"rxvt"
 #  Control + b:2 + Release
-
-"gmrun"
-  Menu
+#
+#"gmrun"
+#  Menu
+#
+#"gmrun"
+#  Mod4 + r
 
 "firefox"
   XF86HomePage

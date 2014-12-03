@@ -3,6 +3,13 @@
 ! authors:  Willy Goiffon, Steeve Chailloux
 ! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
 ! ==============================================================
+Xft.antialias:  0
+Xft.autohint:   0
+Xft.dpi:        96
+Xft.hinting:    1
+Xft.hintstyle:  hintfull
+Xft.lcdfilter:  lcddefault
+Xft.rgba:       rgb
 
 ! Terminal colors (dark) ---------------------------------------
 URxvt*background:[90]#221a17
@@ -20,7 +27,7 @@ URxvt*foreground:#b3b4b1
 *color8:    #5c4c4c
 *color9:    #d43f10
 *color10:   #cef318
-*color11:   #3d3205
+*color11:   #ede265
 *color12:   #6ac0fd
 *color13:   #ef79ae
 *color14:   #49d4dd
@@ -33,60 +40,68 @@ URxvt*loginShell:             false
 URxvt*saveLines:              1024
 URxvt*geometry:               81x20
 URxvt*depth:                  32
-URxvt*font:                   -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
-URxvt*boldFont:               -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
+URxvt*font:                   xft:Inconsolata:size=8
+!URxvt.font:                   xft:DejaVu Sans Mono:pixelsize=11:antialias=true
+!URxvt.boldFont:               xft:DejaVu Sans Mono:bold:pixelsize=11:antialias=true
+URxvt.letterSpace:            -1
+!URxvt*boldFont:               xft:Droid sans mono for powerline.otf:size=12
+!URxvt*font:                   -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*
+!URxvt*boldFont:               -misc-tamsyn-medium-*-*--14-101-*-*-*-*-*,-*-stlarch-medium-r-*--10-*-*-*-*-*
 URxvt*scrollBar:              false
 URxvt*cursorBlink:            false
 URxvt*cursorColor:            #5c4c4c
 URxvt*internalBorder:         2
-URxvt*perl-ext-common:        default,url-select,keyboard-select,tabbedex,clipboard
+URxvt*perl-ext-common:        default,url-select,keyboard-select,clipboard
 URxvt.url-select.launcher:    xdg-open
 URxvt.url-select.underline:   true
 URxvt.keysym.Mod4-g:          perl:url-select:select_next
 URxvt.keysym.Mod4-v:          perl:keyboard-select:activate
-URxvt.tabbed.new-button:      true
-URxvt.tabbed.autohide:        true
-URXvt.tabbed.reopen-on-close: yes
-# required urxvt-perls-git
+! required urxvt-perls-git
 URxvt.clipboard.autocopy:     true
-URxvt.keysym.Mod4-c:   perl:clipboard:copy
-URxvt.keysym.Mod4-p:   perl:clipboard:paste
-URxvt.keysym.Mod4-C-v: perl:clipboard:paste_escaped
-# required xclip
-URxvt.clipboard.copycmd:  xclip -i -selection clipboard
-URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+URxvt.keysym.Mod4-c:          perl:clipboard:copy
+URxvt.keysym.Mod4-p:          perl:clipboard:paste
+URxvt.keysym.Mod4-C-v:        perl:clipboard:paste_escaped
+! required xclip
+URxvt.clipboard.copycmd:      xclip -i -selection clipboard
+URxvt.clipboard.pastecmd:     xclip -o -selection clipboard
 
 ! fix compose key issue
 urxvt*preeditType:            OverTheSpot,Root,None
 
 ! Colored man pages
-URxvt.colorIT:              #cacaca
-URxvt.colorBD:              #eee685
-URxvt.colorUL:              #a28c64
+URxvt.colorIT:                #cacaca
+URxvt.colorBD:                #eee685
+URxvt.colorUL:                #a28c64
 
 ! XTerm ---------------------------------------------------------
 
-xterm*background:#222222
-xterm*foreground:#e8e9ca
+xterm*background:        #221a17
+xterm*foreground:        #b3b4b1
 xterm*scrollBar:         false
-xterm*faceName:          tamsyn
-xterm*faceSize:          8
+xterm*faceName:          DejaVu Sans Mono:size=7.5:antialias=true
 xterm*boldMode:          false
 xterm*cutNewline:        false
 xterm*on4Clicks:         group
 xterm*on5Clicks:         page
-xterm*internalBorder:    8
+!xterm*internalBorder:    8
 xterm*metaSendsEscape:   true
-xterm*colorBD:           #ffffff
+xterm*colorBD:           #eee685
 xterm*colorBDMode:       true
+xterm*colorUL:           #a28c64
+xterm*colorULMode:       true
 xterm*cursorBlink:       false
-xterm*cursorColor:       #e8e9ca
+xterm*cursorColor:       #5c4c4c
 xterm*veryBoldColors:    14
 xterm*loginShell:        true
 xterm*charClass:         33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48,35:48,58:48,63:48,61:48,44:48,38:48,59:48
+*VT100.Translations:     #override \n\
+    Alt <Key>u:          select-needle("://") select-set(PRIMARY) \n\
+    Alt <Key>o:          exec-formatted("xterm -e w3m '%t'", PRIMARY) select-start() select-end()
 xterm*jumpScroll:        true
 xterm*multiScroll:       true
 xterm*saveLines:         512
+! copy paste friendly
+XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 
 xclock*background:      #efefe5
 xclock*face:            Archivo Narrow-16
