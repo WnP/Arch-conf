@@ -46,6 +46,7 @@ Plugin 'kunstmusik/csound-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'itchyny/calendar.vim'
 Plugin 'tpope/vim-haml'
+Plugin 'digitaltoad/vim-jade'
 " snippet
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -123,6 +124,8 @@ hi Visual  ctermbg=0 ctermfg=Grey
 hi Pmenu ctermbg=11 ctermfg=8
 hi PmenuSel ctermbg=8 ctermfg=11
 
+hi FoldColumn ctermbg=0 ctermfg=12
+
 " tab color
 hi TabLineFill ctermfg=Black ctermbg=Black
 hi TabLine ctermfg=DarkBlue ctermbg=Black
@@ -134,15 +137,27 @@ hi MatchParen cterm=bold ctermbg=0 ctermfg=none
 
 " statusline color
 highlight statusline ctermbg=0 ctermfg=0
-highlight StatusLineNC ctermbg=0 ctermfg=0
+highlight StatusLineNC ctermbg=12 ctermfg=0
+
+hi Search term=standout term=Bold ctermbg=2 gui=Bold guibg=SeaGreen
+
+hi DiffAdd term=bold ctermbg=0 ctermfg=12 gui=bold guifg=Blue
+hi DiffChange term=bold ctermbg=0 ctermfg=2 gui=bold guifg=SeaGreen
+hi DiffDelete term=underline ctermbg=0 ctermfg=130 guifg=Brown
+hi DiffText term=bold cterm=bold ctermbg=0 ctermfg=9 ctermbg=0 gui=bold
+
+hi SyntasticError term=bold ctermbg=0 ctermfg=130 gui=bold guifg=Brown
+hi SyntasticWarning term=underline ctermbg=0 cterm=underline ctermfg=5 gui=underline guifg=SlateBlue
+hi SyntasticStyleError term=bold ctermbg=0 ctermfg=130 gui=bold guifg=Brown
+hi SyntasticStyleWarning term=underline ctermbg=0 cterm=underline ctermfg=5 gui=underline guifg=SlateBlue
 
 " }}}
 
 " Editor ui {{{
 
 " remove statusline
-set laststatus=0
-set statusline=\
+"set laststatus=0
+"set statusline=\
 
 " ruler setting
 set ruler
@@ -181,6 +196,9 @@ autocmd FileType python,c,javascript,css,html,xml,htmldjango,mako,vim autocmd Bu
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
 au Filetype c set foldmethod=syntax
 au Filetype vim set foldmethod=marker
+
+" enable :make to run python script in vim
+au Filetype python set makeprg=python\ %
 
 " }}}
 
@@ -256,7 +274,7 @@ nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
 " Plugin conf {{{
 
 " vim jedi don't auto start completion
-let g:jedi#popup_on_dot = 0
+let g:jedi#popup_on_dot = 1
 
 " supertab depend on context, usefull to complete snipet and python methodes
 let g:SuperTabDefaultCompletionType = "context"
@@ -279,6 +297,26 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 " }}}
+
+" }}}
+
+" python virtualenv handler {{{
+" thx to @strycore https://github.com/davidhalter/jedi-vim/issues/31
+
+" Add the virtualenv's site-packages to vim path
+if has('python')
+py << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir,
+    'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
+endif
 
 " }}}
 
@@ -355,6 +393,41 @@ set hlsearch
 "
 " }}}
 
+" }}}
+
+" ViM Memo {{{
+"
+" Register
+" ========
+"
+" list registers                    -> :reg
+" record motion to register a       -> qa
+" stop recording                    -> q
+" play motion in register a         -> @a
+" paste register a content          -> "ap
+" copy current line to register a   -> "ayy
+" append curent line to register a  -> "Ayy
+"
+" Jumps
+" =====
+"
+" list jumps                        -> :jumps
+" go to older jumps                 -> <jump number> C-o
+" go to newer jumps                 -> <jump number> C-i
+"
+" Last edited line                  -> g;
+" Previous edited line              -> g,
+"
+" Marks
+" =====
+"
+" list marks                        -> :marks
+" set mark a                        -> ma
+" go to line mark a                 -> 'a
+" go to caractere in line mark a    -> `a
+" previous mark                     -> [' or [`
+" next mark                         -> ]' or ]`
+"
 " }}}
 
 " vim: set fdm=marker set fenc=utf-8

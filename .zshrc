@@ -33,8 +33,9 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(git archlinux django github history history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
+source /usr/bin/virtualenvwrapper.sh &>/dev/null
 
-# alias grep='grep --color=always -d skip'
+alias grep='grep --color=always -d skip'
 alias emacs='sudo emacs -nw'
 alias pacman='sudo pacman'
 alias systemctl='sudo systemctl'
@@ -65,10 +66,13 @@ alias la='ls -a'
 alias sudo="LD_PRELOAD= sudo"
 alias man="LD_PRELOAD= man"
 # alias emerge="sudo emerge"
+alias ppython="ptipython --vi"
 
 
 export EDITOR='vim'
-export PATH=$PATH:/sbin:/home/scl/.gem/ruby/2.1.0/bin:/home/scl/.cabal/bin
+export PATH=$PATH:/sbin:/home/scl/.cabal/bin
+export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+export WORKON_HOME=~/Envs
 
 MAIL=/var/spool/mail/scl && export MAIL
 
@@ -88,3 +92,5 @@ promptinit; prompt gentoo
 
 alias grep="/bin/grep $GREP_OPTIONS"
 unset GREP_OPTIONS
+
+sppr() { curl -F 'sprunge=<-' http://sprunge.us < ${1:-/dev/stdin} ;}
