@@ -47,6 +47,8 @@ Plugin 'mileszs/ack.vim'
 Plugin 'itchyny/calendar.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'ryanss/vim-hackernews'
 " snippet
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -116,6 +118,11 @@ highlight SignColumn ctermbg=232
 
 " vsplit color
 highlight VertSplit ctermbg=0 ctermfg=0
+
+hi CursorLine   cterm=bold ctermbg=Black ctermfg=None
+hi CursorColumn cterm=None ctermbg=Black ctermfg=None
+set cursorline
+set cursorcolumn
 
 " visual color
 hi Visual  ctermbg=0 ctermfg=Grey
@@ -232,6 +239,18 @@ imap <right> <nop>
 imap <left> <nop>
 imap <up> <nop>
 imap <down> <nop>
+
+" Ctrl-e: Go to end of line
+inoremap <C-e> <esc>A
+
+" Ctrl-l: Move word right
+inoremap <C-l> <Right>
+" Ctrl-h: Move word left
+inoremap <C-h> <Left>
+" Ctrl-j: Move cursor down
+inoremap <expr> <C-j> pumvisible() ? "\<C-e>\<Down>" : "\<Down>"
+" Ctrl-k: Move cursor up
+inoremap <expr> <C-k> pumvisible() ? "\<C-e>\<Up>" : "\<Up>"
 
 " }}}
 
