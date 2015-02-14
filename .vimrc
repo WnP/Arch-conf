@@ -14,10 +14,6 @@ call vundle#begin()
 " required it's vundle!
 Plugin 'gmarik/vundle'
 
-" Games
-Plugin 'TeTrIs.vim'
-Plugin 'sokoban.vim'
-
 " My Plugins here:
 Plugin 'davidhalter/jedi-vim'
 " don't forget to rename jpythonfold.vim to python.vim
@@ -25,11 +21,9 @@ Plugin 'jpythonfold.vim'
 Plugin 'scrooloose/syntastic'
 " Plugin 'scrooloose/nerdtree'
 Plugin 'sjbach/lusty'
-Plugin 'mbbill/undotree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
 Plugin 'groenewege/vim-less'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kchmck/vim-coffee-script'
@@ -44,11 +38,8 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'sudar/vim-arduino-syntax'
 Plugin 'kunstmusik/csound-vim'
 Plugin 'mileszs/ack.vim'
-Plugin 'itchyny/calendar.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'digitaltoad/vim-jade'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'ryanss/vim-hackernews'
 " snippet
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
