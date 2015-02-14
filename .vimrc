@@ -40,6 +40,8 @@ Plugin 'kunstmusik/csound-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'guns/xterm-color-table.vim'
+Plugin 'vim-scripts/LanguageTool'
 " snippet
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -148,6 +150,12 @@ hi SyntasticError term=bold ctermbg=0 ctermfg=130 gui=bold guifg=Brown
 hi SyntasticWarning term=underline ctermbg=0 cterm=underline ctermfg=5 gui=underline guifg=SlateBlue
 hi SyntasticStyleError term=bold ctermbg=0 ctermfg=130 gui=bold guifg=Brown
 hi SyntasticStyleWarning term=underline ctermbg=0 cterm=underline ctermfg=5 gui=underline guifg=SlateBlue
+hi Search ctermfg=252 ctermbg=22
+
+hi SpellBad term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guibg=Red
+hi SpellRare term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guibg=Red
+hi SpellCap term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guibg=Red
+hi SpellLocal term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guibg=Red
 
 " }}}
 
@@ -155,7 +163,7 @@ hi SyntasticStyleWarning term=underline ctermbg=0 cterm=underline ctermfg=5 gui=
 
 " remove statusline
 "set laststatus=0
-"set statusline=\
+"set statusline=
 
 " ruler setting
 set ruler
@@ -174,6 +182,8 @@ set expandtab
 
 " minimum number of line under and above the cursor
 set scrolloff=5
+
+set spelllang=fr
 
 " }}}
 
@@ -207,7 +217,7 @@ au Filetype python set makeprg=python\ %
 " usefull tricks {{{
 
 " remap the leader default: '\'
-"let mapleader=';'
+let mapleader='-'
 
 " map jk for exit insert mode
 imap jk <ESC>
@@ -302,9 +312,7 @@ let g:syntastic_loc_list_height=5
 " max-line-length = 100
 " max-complexity = 10
 
-" Calendar
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
+let g:languagetool_jar='$HOME/.vim/LanguageTool-2.8/languagetool-commandline.jar'
 
 " }}}
 
@@ -437,6 +445,15 @@ set hlsearch
 " go to caractere in line mark a    -> `a
 " previous mark                     -> [' or [`
 " next mark                         -> ]' or ]`
+"
+" Spell
+" =====
+"
+" start spell check                 -> set spell
+" go to previous error              -> [s
+" go to next error                  -> ]s
+" see suggestions list              -> z=
+" add to dictionary                 -> zg
 "
 " }}}
 
