@@ -34,6 +34,7 @@ Plugin 'vim-scripts/django.vim'
 Plugin 'ajford/vimkivy'
 Plugin 'ervandew/supertab'
 Plugin 'c.vim'
+Plugin 'fatih/vim-go'
 Plugin 'lilydjwg/colorizer'
 Plugin 'sudar/vim-arduino-syntax'
 Plugin 'kunstmusik/csound-vim'
@@ -288,6 +289,22 @@ let g:ackprg="ack -H --nocolor --nogroup --column"
 nmap <leader>f mA:Ack<space>
 nmap <leader>fa mA:Ack "<C-r>=expand("<cword>")<cr>"
 nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
+
+" go
+" Show a list of interfaces which is implemented by the type under your cursor
+au FileType go nmap <Leader>s <Plug>(go-implements)
+" Show type info for the word under your cursor
+au FileType go nmap <Leader>i <Plug>(go-info)
+" Open the relevant Godoc for the word under the cursor
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+" Or open the Godoc in browser
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+" run, build, test and coverage
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
 
 " }}}
 

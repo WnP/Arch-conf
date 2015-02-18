@@ -70,9 +70,11 @@ alias ppython="ptipython --vi"
 
 
 export EDITOR='vim'
-export PATH=$PATH:/sbin:/home/scl/.cabal/bin
+export PATH=$PATH:/sbin:/home/scl/.cabal/bin:/home/scl/bin:/home/scl/bin/seafile-cli
 export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 export WORKON_HOME=~/Envs
+export GOPATH=$HOME/ProgProj/go
+export PATH=$PATH:$GOPATH/bin:/usr/lib/go/bin
 
 MAIL=/var/spool/mail/scl && export MAIL
 
