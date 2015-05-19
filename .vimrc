@@ -20,7 +20,7 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'jpythonfold.vim'
 Plugin 'scrooloose/syntastic'
 " Plugin 'scrooloose/nerdtree'
-Plugin 'sjbach/lusty'
+" Plugin 'sjbach/lusty'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/webapi-vim'
@@ -38,9 +38,10 @@ Plugin 'fatih/vim-go'
 Plugin 'lilydjwg/colorizer'
 Plugin 'sudar/vim-arduino-syntax'
 Plugin 'kunstmusik/csound-vim'
-Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'wavded/vim-stylus'
+Plugin 'majutsushi/tagbar'
 Plugin 'guns/xterm-color-table.vim'
 Plugin 'vim-scripts/LanguageTool'
 " snippet
@@ -177,9 +178,9 @@ set list
 set listchars=tab:\|\ ,trail:⋅,nbsp:˽
 
 " always expand tabs to 4 space
-set tabstop=4
-set shiftwidth=4
-set expandtab
+" set tabstop=4
+" set shiftwidth=4
+" set expandtab
 
 " minimum number of line under and above the cursor
 set scrolloff=5
@@ -192,17 +193,13 @@ set spelllang=fr
 
 " Language syntax indent
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
-autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab
-autocmd FileType css setlocal shiftwidth=4 tabstop=4 expandtab
-autocmd FileType html,xhtml setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType xml setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType mako setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType javascript,json,html,xhtml,css,xml,htmldjango,mako,stylus,scss setlocal shiftwidth=2 tabstop=2 expandtab
 " Language Automatically removing all trailing whitespace
 autocmd FileType python,c,javascript,css,html,xml,htmldjango,mako,vim autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
+au Filetype go set foldmethod=indent
 au Filetype c set foldmethod=syntax
 au Filetype vim set foldmethod=marker
 
@@ -218,7 +215,7 @@ au Filetype python set makeprg=python\ %
 " usefull tricks {{{
 
 " remap the leader default: '\'
-let mapleader='-'
+let mapleader='\'
 
 " map jk for exit insert mode
 imap jk <ESC>
@@ -290,22 +287,6 @@ nmap <leader>f mA:Ack<space>
 nmap <leader>fa mA:Ack "<C-r>=expand("<cword>")<cr>"
 nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
 
-" go
-" Show a list of interfaces which is implemented by the type under your cursor
-au FileType go nmap <Leader>s <Plug>(go-implements)
-" Show type info for the word under your cursor
-au FileType go nmap <Leader>i <Plug>(go-info)
-" Open the relevant Godoc for the word under the cursor
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-" Or open the Godoc in browser
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-" run, build, test and coverage
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-
 " }}}
 
 " Plugin conf {{{
@@ -331,27 +312,67 @@ let g:syntastic_loc_list_height=5
 
 let g:languagetool_jar='$HOME/.vim/LanguageTool-2.8/languagetool-commandline.jar'
 
-" }}}
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
 
-" }}}
+" go
+" Show a list of interfaces which is implemented by the type under your cursor
+au FileType go nmap <Leader>s <Plug>(go-implements)
+" Show type info for the word under your cursor
+au FileType go nmap <Leader>i <Plug>(go-info)
+" Open the relevant Godoc for the word under the cursor
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+" Or open the Godoc in browser
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+" run, build, test and coverage
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+" go to definition
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+" Rename the identifier under the cursor to a new name
+au FileType go nmap <Leader>e <Plug>(go-rename)
 
-" python virtualenv handler {{{
-" thx to @strycore https://github.com/davidhalter/jedi-vim/issues/31
+" Enable goimports to automatically insert import paths instead of gofmt
+let g:go_fmt_command = "goimports"
 
-" Add the virtualenv's site-packages to vim path
-if has('python')
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir,
-    'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
+" By default syntax-highlighting for Functions, Methods and Structs is
+" disabled. To change it:
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
 endif
+
+" }}}
 
 " }}}
 

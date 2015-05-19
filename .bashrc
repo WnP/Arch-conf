@@ -10,12 +10,12 @@
 PS1='\[\e[0;34m\]├──\[\e[1;35m\]| \[\e[0;36m\]\u\[\e[0;34m\] \[\e[1;35m\]|\[\e[0;34m\]─\[\e[1;35m\]| \[\e[0;32m\]\w\[\e[0;34m\] \[\e[1;35m\]|\n\[\e[0;34m\] └─\[\e[1;35m\]| \[\e[1;32m\]\A\[\e[0;34m\] \[\e[1;35m\]|\[\e[0;34m\]──\[\e[1;35m\]╼ \[\e[0m\] '
 # \[\e[1;36m\] '
 
-alias l='ls -Gal'
-alias ls='ls -G'
-alias ll='ls -l -G'
-alias la='ls -a -G'
-alias lll='ls -l -G | more'
-alias grep='grep -G -d skip'
+alias l='ls -al'
+alias ls='ls'
+alias ll='ls -l'
+alias la='ls -a'
+alias lll='ls -l | more'
+alias grep='grep -d skip'
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 complete -cf sudo
 complete -cf man
@@ -46,8 +46,8 @@ export HISTFILESIZE=50000
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
-$PATH=/usr/locale/bin:$PATH
-export PATH=$PATH
+#$PATH=/usr/locale/bin:$PATH
+#export PATH=$PATH
 # Fin Gestion History ###########
 #################################
 

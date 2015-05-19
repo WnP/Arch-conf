@@ -30,8 +30,9 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git archlinux django github history history-substring-search)
+plugins=(pass git archlinux django github history history-substring-search)
 
+source /etc/profile
 source $ZSH/oh-my-zsh.sh
 source /usr/bin/virtualenvwrapper.sh &>/dev/null
 
@@ -67,14 +68,17 @@ alias sudo="LD_PRELOAD= sudo"
 alias man="LD_PRELOAD= man"
 # alias emerge="sudo emerge"
 alias ppython="ptipython --vi"
+#alias fireflash="sudo chroot ~/arch /bin/su - scl -c `DISPLAY=:0 firefox`"
 
 
 export EDITOR='vim'
-export PATH=$PATH:/sbin:/home/scl/.cabal/bin:/home/scl/bin:/home/scl/bin/seafile-cli
-export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+#export PATH=$PATH:/sbin:/home/scl/.cabal/bin:/home/scl/bin:/home/scl/bin/seafile-cli
+#export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 export WORKON_HOME=~/Envs
 export GOPATH=$HOME/ProgProj/go
 export PATH=$PATH:$GOPATH/bin:/usr/lib/go/bin
+export PATH=/sbin:$PATH
+export PATH=/usr/sbin:$PATH:/usr/local/bin
 
 MAIL=/var/spool/mail/scl && export MAIL
 
@@ -88,11 +92,81 @@ MAIL=/var/spool/mail/scl && export MAIL
 ##############################################
 
 #archey3 --config=~/.config/archey3.cfg
-autoload -U compinit promptinit
-compinit
-promptinit; prompt gentoo
+#autoload -U compinit promptinit
+#compinit
+#promptinit; prompt gentoo
 
 alias grep="/bin/grep $GREP_OPTIONS"
 unset GREP_OPTIONS
 
 sppr() { curl -F 'sprunge=<-' http://sprunge.us < ${1:-/dev/stdin} ;}
+
+prepare_chroot() {
+    CHROOT_PATH="/home/scl/$1"
+
+    printf "* copying Xauth files\n"
+    cp /home/scl/.Xauthority $CHROOT_PATH/home/scl/
+    #cp /home/scl/.xauth* $CHROOT_PATH/home/scl/
+
+    printf "* give permission to anyone to connect to the user's X server\n"
+    xhost +local:
+
+    if [ -z "$(grep $CHROOT_PATH/proc /etc/mtab)" ]; then
+        printf "* mount chroot /proc\n"
+        sudo mount -o bind /proc $CHROOT_PATH/proc
+        sudo mount -o bind,ro,remount /proc $CHROOT_PATH/proc
+    else
+        printf "* chroot /proc already mounted\n"
+    fi
+
+    if [ -z "$(grep $CHROOT_PATH/sys /etc/mtab)" ]; then
+        printf "* mount chroot /sys\n"
+        sudo mount -o bind /sys $CHROOT_PATH/sys
+        sudo mount -o bind,ro,remount /sys $CHROOT_PATH/sys
+    else
+        printf "* chroot /sys already mounted\n"
+    fi
+
+    if [ -z "$(grep $CHROOT_PATH/dev /etc/mtab)" ]; then
+        printf "* mount chroot /dev\n"
+        sudo mount -o bind /dev $CHROOT_PATH/dev
+        sudo mount -o bind,ro,remount /dev $CHROOT_PATH/dev
+        sudo mount -o bind /dev/pts $CHROOT_PATH/dev/pts
+        sudo mount -o bind /dev/v4l $CHROOT_PATH/dev/v4l
+        sudo mount -o bind /dev/snd $CHROOT_PATH/dev/snd
+    else
+        printf "* chroot /dev already mounted\n"
+    fi
+
+    if [ -z "$(grep $CHROOT_PATH/run /etc/mtab)" ]; then
+        printf "* mount chroot /run\n"
+        sudo mount -o bind /run $CHROOT_PATH/run
+        sudo mount -o bind,ro,remount /run $CHROOT_PATH/run
+    else
+        printf "* chroot /run already mounted\n"
+    fi
+
+    if [ -z "$(grep $CHROOT_PATH/tmp /etc/mtab)" ]; then
+        printf "* mount chroot /tmp\n"
+        sudo mount -o bind /tmp $CHROOT_PATH/tmp
+        sudo mount -o bind,ro,remount /tmp $CHROOT_PATH/tmp
+    else
+        printf "* chroot /tmp already mounted\n"
+    fi
+
+    printf "* copie /etc/resolv.conf\n"
+    sudo cp /etc/resolv.conf $CHROOT_PATH/etc/resolv.conf
+}
+
+alias archffx="sudo chroot ~/arch /bin/su - scl -c 'DISPLAY=:0 firefox'"
+TERM=xterm
+
+PATH="/home/scl/ProgProj/android-sdk-linux/platform-tools:/usr/lib/jvm/java-1.7-openjdk/bin:/home/scl/perl5/bin${PATH+:}${PATH}"; export PATH;
+PERL5LIB="/home/scl/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/scl/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/scl/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/scl/perl5"; export PERL_MM_OPT;
+export ANDROID_HOME="/home/scl/ProgProj/android-sdk-linux"
+export JAVA_HOME="/usr/lib/jvm/java-1.7-openjdk/jre"
+
+export SKIP_SASS_BINARY_DOWNLOAD_FOR_CI=true
