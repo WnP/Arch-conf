@@ -1,6 +1,8 @@
 Arch-conf
 =========
 
-My Archlinux dot files
+My dot files
 
-![Arch-logo](http://github.com/WnP/Arch-conf/raw/master/allogo.jpg)
+Historicaly this repo is named `Arch-conf` even if I no longer use archlinux ;-)
+
+![Arch-logo](https://raw.githubusercontent.com/WnP/Arch-conf/master/allogo.jpg)
