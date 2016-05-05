@@ -39,11 +39,16 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'sudar/vim-arduino-syntax'
 Plugin 'kunstmusik/csound-vim'
 Plugin 'tpope/vim-haml'
-Plugin 'digitaltoad/vim-jade'
+Plugin 'statianzo/vim-jade'
 Plugin 'wavded/vim-stylus'
 Plugin 'majutsushi/tagbar'
 Plugin 'guns/xterm-color-table.vim'
 Plugin 'vim-scripts/LanguageTool'
+Plugin 'esneider/YUNOcommit.vim'
+" Plugin 'othree/yajs.vim'
+Plugin 'curist/vim-angular-template'
+Plugin 'aklt/plantuml-syntax'
+Plugin 'rhysd/vim-crystal'
 " snippet
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -60,9 +65,12 @@ filetype plugin indent on     " required by vundle!
 " colors and syntax
 syntax on
 set t_Co=256
-set wrap " show long lines on many lines
-set title " update term title
+set wrap       " show long lines on many lines
+set title      " update term title
 set hidden
+se showcmd     " show command
+se autochdir   " auto change dir
+se nu         " set number line
 
 " fold text {{{
 if has("folding")
@@ -106,18 +114,19 @@ endif
 " Colors {{{
 
 " set fold color
-highlight Folded ctermfg=DarkBlue ctermbg=232
+highlight Folded ctermfg=DarkBlue ctermbg=234
 
 " Gutter color
-highlight SignColumn ctermbg=232
+highlight SignColumn ctermbg=234
 
 " vsplit color
-highlight VertSplit ctermbg=0 ctermfg=0
+highlight VertSplit ctermbg=234 ctermfg=234
 
 hi CursorLine   cterm=bold ctermbg=Black ctermfg=None
 hi CursorColumn cterm=None ctermbg=Black ctermfg=None
-set cursorline
-set cursorcolumn
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
 
 " visual color
 hi Visual  ctermbg=0 ctermfg=Grey
@@ -130,7 +139,7 @@ hi FoldColumn ctermbg=0 ctermfg=12
 
 " tab color
 hi TabLineFill ctermfg=Black ctermbg=Black
-hi TabLine ctermfg=DarkBlue ctermbg=Black
+hi TabLine term=reverse cterm=reverse ctermfg=Black ctermbg=DarkBlue
 hi TabLineSel ctermfg=Red ctermbg=Black
 hi Title ctermfg=LightBlue ctermbg=Black
 
@@ -139,7 +148,7 @@ hi MatchParen cterm=bold ctermbg=0 ctermfg=none
 
 " statusline color
 highlight statusline ctermbg=0 ctermfg=0
-highlight StatusLineNC ctermbg=12 ctermfg=0
+highlight StatusLineNC ctermbg=DarkYellow ctermfg=234
 
 hi Search term=standout term=Bold ctermbg=2 gui=Bold guibg=SeaGreen
 
@@ -193,9 +202,11 @@ set spelllang=fr
 
 " Language syntax indent
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
-autocmd FileType javascript,json,html,xhtml,css,xml,htmldjango,mako,stylus,scss setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType go setlocal shiftwidth=4 tabstop=4
+autocmd FileType javascript,sql,json,html,xhtml,css,xml,yaml,yml,htmldjango,mako,stylus,scss,jade,coffee,less setlocal shiftwidth=2 tabstop=2 expandtab
 " Language Automatically removing all trailing whitespace
-autocmd FileType python,c,javascript,css,html,xml,htmldjango,mako,vim autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType python,c,javascript,css,html,xml,htmldjango,mako,vim,stylus,scss,jade,coffee,less autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd BufEnter,BufNew *.Dockerfile setlocal filetype=dockerfile
 
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
@@ -223,6 +234,8 @@ imap jk <ESC>
 " usefull for search, centering the result
 nnoremap n nzz
 nnoremap N Nzz
+
+nnoremap ; :
 
 " buffer next & prev...
 " do you realy need C-n and C-p in normal mode?!?
@@ -291,8 +304,12 @@ nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
 
 " Plugin conf {{{
 
+" Y U No Commit?
+let g:YUNOcommit_after = 20
+
 " vim jedi don't auto start completion
-let g:jedi#popup_on_dot = 1
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_command = "<C-Space>"
 
 " supertab depend on context, usefull to complete snipet and python methodes
 let g:SuperTabDefaultCompletionType = "context"
@@ -301,7 +318,9 @@ let g:SuperTabDefaultCompletionType = "context"
 " don't forget to install flake8: pip install flake8
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_auto_loc_list=1
-let g:syntastic_loc_list_height=5
+" let g:syntastic_loc_list_height=5
+" let g:syntastic_mode_map={'mode': 'active','passive_filetypes':['go']}
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 " ignore line width for syntax checking and add more complexity
 " add the following in ~/.config/flake8
 "
@@ -339,6 +358,9 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 
 " Enable goimports to automatically insert import paths instead of gofmt
 let g:go_fmt_command = "goimports"
+
+" let g:go_fmt_fail_silently = 0
+" let g:go_fmt_autosave = 1
 
 " By default syntax-highlighting for Functions, Methods and Structs is
 " disabled. To change it:
