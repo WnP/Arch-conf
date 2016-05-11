@@ -148,7 +148,7 @@ hi TabLineSel ctermfg=Red ctermbg=Black
 hi Title ctermfg=LightBlue ctermbg=Black
 
 " parenthesis highlighting color
-hi MatchParen cterm=bold ctermbg=0 ctermfg=Red
+hi MatchParen term=standout term=Bold ctermbg=2 gui=Bold guibg=SeaGreen
 
 " statusline color
 highlight statusline ctermbg=0 ctermfg=0
@@ -236,7 +236,9 @@ au Filetype python set makeprg=python\ %
 " usefull tricks {{{
 
 " remap the leader default: '\'
-let mapleader="\<Space>"
+let mapleader='\'
+" map leader on space only in normal mode
+nmap <space> <leader>
 
 " map jk for exit insert mode
 imap jk <ESC>
@@ -290,7 +292,7 @@ nnoremap <leader>u :UndotreeToggle<cr>
 "let NERDTreeQuitOnOpen=1
 
 " tab keys
-map <leader>tn :tabnew<cr>
+nmap <leader>tn :tabnew<cr>
 " map <leader>tc :tabclose<CR>
 
 " read all file in hexa
@@ -301,7 +303,7 @@ nmap <leader>He :%!xxd -r<cr>
 nmap <leader>h :nohlsearch<cr>
 
 " remap line selection
-nmap <leader><leader> V
+nmap <leader><Space> V
 
 " paste
 set pastetoggle=<leader>pp
@@ -350,9 +352,9 @@ let g:languagetool_jar='$HOME/.vim/LanguageTool-2.8/languagetool-commandline.jar
 nmap <leader>t :TagbarToggle<CR>
 
 " unite
-nnoremap <leader>e :Unite file file_rec/async<cr>
+nnoremap <leader>e :Unite file_rec/async<cr>
 nnoremap <leader>b :Unite -quick-match buffer<cr>
-nnoremap <leader>f :Unite file file_rec/async buffer<cr>
+nnoremap <leader>f :Unite file_rec/async buffer<cr>
 let g:unite_source_grep_command = 'ack'
 let g:unite_source_grep_default_opts='--no-heading --no-color -k -H'
 let g:unite_source_grep_recursive_opt=''
