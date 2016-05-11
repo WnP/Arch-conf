@@ -49,6 +49,10 @@ Plugin 'esneider/YUNOcommit.vim'
 Plugin 'curist/vim-angular-template'
 Plugin 'aklt/plantuml-syntax'
 Plugin 'rhysd/vim-crystal'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/neoyank.vim'
+" Don't froget to go to vimproc directory and make
+Plugin 'Shougo/vimproc.vim'
 " snippet
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -69,7 +73,7 @@ set wrap       " show long lines on many lines
 set title      " update term title
 set hidden
 se showcmd     " show command
-se autochdir   " auto change dir
+"se autochdir   " auto change dir
 se nu         " set number line
 
 " fold text {{{
@@ -144,7 +148,7 @@ hi TabLineSel ctermfg=Red ctermbg=Black
 hi Title ctermfg=LightBlue ctermbg=Black
 
 " parenthesis highlighting color
-hi MatchParen cterm=bold ctermbg=0 ctermfg=none
+hi MatchParen cterm=bold ctermbg=0 ctermfg=Red
 
 " statusline color
 highlight statusline ctermbg=0 ctermfg=0
@@ -194,6 +198,12 @@ set listchars=tab:\|\ ,trail:⋅,nbsp:˽
 " minimum number of line under and above the cursor
 set scrolloff=5
 
+set ttyfast " Faster refraw
+set showmatch " When a bracket is inserted, briefly jump to the matching one
+set iskeyword+=\- " Complete words containing a dash
+" Open all cmd args in new tabs
+execute ":silent tab all"
+
 set spelllang=fr
 
 " }}}
@@ -226,7 +236,7 @@ au Filetype python set makeprg=python\ %
 " usefull tricks {{{
 
 " remap the leader default: '\'
-let mapleader='\'
+let mapleader="\<Space>"
 
 " map jk for exit insert mode
 imap jk <ESC>
@@ -269,8 +279,8 @@ inoremap <expr> <C-k> pumvisible() ? "\<C-e>\<Up>" : "\<Up>"
 " Plugin keys & nav {{{
 
 " GitGutter - navig through git diff
-nmap <leader>c <Plug>GitGutterNextHunk
-nmap <leader>C <Plug>GitGutterPrevHunk
+nmap <leader>g <Plug>GitGutterNextHunk
+nmap <leader>G <Plug>GitGutterPrevHunk
 
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
@@ -284,21 +294,26 @@ map <leader>tn :tabnew<cr>
 " map <leader>tc :tabclose<CR>
 
 " read all file in hexa
-nmap <leader>h :%!xxd<cr>
+nmap <leader>he :%!xxd<cr>
 " return to binary
-nmap <leader>H :%!xxd -r<cr>
+nmap <leader>He :%!xxd -r<cr>
+
+nmap <leader>h :nohlsearch<cr>
+
+" remap line selection
+nmap <leader><leader> V
 
 " paste
-set pastetoggle=<leader>p
+set pastetoggle=<leader>pp
 
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
 
 " ack
-let g:ackprg="ack -H --nocolor --nogroup --column"
-nmap <leader>f mA:Ack<space>
-nmap <leader>fa mA:Ack "<C-r>=expand("<cword>")<cr>"
-nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
+" let g:ackprg="ack -H --nocolor --nogroup --column"
+" nmap <leader>f mA:Ack<space>
+" nmap <leader>fa mA:Ack "<C-r>=expand("<cword>")<cr>"
+" nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
 
 " }}}
 
@@ -332,7 +347,20 @@ let g:syntastic_auto_loc_list=1
 let g:languagetool_jar='$HOME/.vim/LanguageTool-2.8/languagetool-commandline.jar'
 
 " Tagbar
-nmap <F8> :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR>
+
+" unite
+nnoremap <leader>e :Unite file file_rec/async<cr>
+nnoremap <leader>b :Unite -quick-match buffer<cr>
+nnoremap <leader>f :Unite file file_rec/async buffer<cr>
+let g:unite_source_grep_command = 'ack'
+let g:unite_source_grep_default_opts='--no-heading --no-color -k -H'
+let g:unite_source_grep_recursive_opt=''
+nnoremap <leader>/ :Unite grep:.<cr>
+nnoremap <leader>? :Unite grep<cr>
+" let g:unite_source_history_yank_enable = 1
+nnoremap <leader>y :Unite history/yank<cr>
+nnoremap <leader>l :Unite line<cr>
 
 " go
 " Show a list of interfaces which is implemented by the type under your cursor
