@@ -51,6 +51,8 @@ Plugin 'aklt/plantuml-syntax'
 Plugin 'rhysd/vim-crystal'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/neoyank.vim'
+Plugin 'hobbestigrou/vimtips-fortune'
+Plugin 'tpope/vim-obsession'
 " Don't froget to go to vimproc directory and make
 Plugin 'Shougo/vimproc.vim'
 " snippet
@@ -306,7 +308,7 @@ nmap <leader>h :nohlsearch<cr>
 nmap <leader><Space> V
 
 " paste
-set pastetoggle=<leader>pp
+set pastetoggle=<leader>p
 
 " upload to sprunge.us
 command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
