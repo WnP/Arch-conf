@@ -333,6 +333,9 @@ let g:jedi#completions_command = "<C-Space>"
 " supertab depend on context, usefull to complete snipet and python methodes
 let g:SuperTabDefaultCompletionType = "context"
 
+" don't display fortune on startup
+let g:fortune_vimtips_auto_display = 0
+
 " syntastic
 " don't forget to install flake8: pip install flake8
 let g:syntastic_python_checkers=['flake8']
