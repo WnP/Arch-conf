@@ -339,6 +339,8 @@ let g:fortune_vimtips_auto_display = 0
 " syntastic
 " don't forget to install flake8: pip install flake8
 let g:syntastic_python_checkers=['flake8']
+nmap <leader>2 :let g:syntastic_python_checkers=['flake8']<cr>
+nmap <leader>3 :let g:syntastic_python_checkers=['flake8.py3']<cr>
 let g:syntastic_auto_loc_list=1
 " let g:syntastic_loc_list_height=5
 " let g:syntastic_mode_map={'mode': 'active','passive_filetypes':['go']}
