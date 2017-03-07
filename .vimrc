@@ -1,67 +1,6 @@
 set nocompatible               " be iMproved
 set modeline
 
-" vundle conf {{{
-
-filetype off                   " required by vundle!
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" }}}
-
-" bundles {{{
-
-" required it's vundle!
-Plugin 'gmarik/vundle'
-
-" My Plugins here:
-Plugin 'davidhalter/jedi-vim'
-" don't forget to rename jpythonfold.vim to python.vim
-Plugin 'jpythonfold.vim'
-Plugin 'scrooloose/syntastic'
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'sjbach/lusty'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mattn/webapi-vim'
-Plugin 'groenewege/vim-less'
-Plugin 'pangloss/vim-javascript'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'tpope/vim-markdown'
-Plugin 'sophacles/vim-bundle-mako'
-Plugin 'vim-scripts/django.vim'
-Plugin 'ajford/vimkivy'
-Plugin 'ervandew/supertab'
-Plugin 'c.vim'
-Plugin 'fatih/vim-go'
-Plugin 'lilydjwg/colorizer'
-Plugin 'sudar/vim-arduino-syntax'
-Plugin 'kunstmusik/csound-vim'
-Plugin 'tpope/vim-haml'
-Plugin 'statianzo/vim-jade'
-Plugin 'wavded/vim-stylus'
-Plugin 'majutsushi/tagbar'
-Plugin 'guns/xterm-color-table.vim'
-Plugin 'vim-scripts/LanguageTool'
-Plugin 'esneider/YUNOcommit.vim'
-" Plugin 'othree/yajs.vim'
-Plugin 'curist/vim-angular-template'
-Plugin 'aklt/plantuml-syntax'
-Plugin 'rhysd/vim-crystal'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/neoyank.vim'
-Plugin 'hobbestigrou/vimtips-fortune'
-Plugin 'tpope/vim-obsession'
-" Don't froget to go to vimproc directory and make
-Plugin 'Shougo/vimproc.vim'
-" snippet
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-
-call vundle#end()             " required by vundle!
 filetype plugin indent on     " required by vundle!
 
 " }}}
@@ -257,14 +196,14 @@ nnoremap <C-p> :bp<CR>
 nnoremap <C-n> :bn<CR>
 
 " don't use arrow keys
-map <right> <nop>
-map <left> <nop>
-map <up> <nop>
-map <down> <nop>
-imap <right> <nop>
-imap <left> <nop>
-imap <up> <nop>
-imap <down> <nop>
+"map <right> <nop>
+"map <left> <nop>
+"map <up> <nop>
+"map <down> <nop>
+"imap <right> <nop>
+"imap <left> <nop>
+"imap <up> <nop>
+"imap <down> <nop>
 
 " Ctrl-e: Go to end of line
 inoremap <C-e> <esc>A
@@ -318,118 +257,6 @@ command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
 " nmap <leader>f mA:Ack<space>
 " nmap <leader>fa mA:Ack "<C-r>=expand("<cword>")<cr>"
 " nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
-
-" }}}
-
-" Plugin conf {{{
-
-" Y U No Commit?
-let g:YUNOcommit_after = 20
-
-" vim jedi don't auto start completion
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_command = "<C-Space>"
-
-" supertab depend on context, usefull to complete snipet and python methodes
-let g:SuperTabDefaultCompletionType = "context"
-
-" don't display fortune on startup
-let g:fortune_vimtips_auto_display = 0
-
-" syntastic
-" don't forget to install flake8: pip install flake8
-let g:syntastic_python_checkers=['flake8']
-nmap <leader>2 :let g:syntastic_python_checkers=['flake8']<cr>
-nmap <leader>3 :let g:syntastic_python_checkers=['flake8.py3']<cr>
-let g:syntastic_auto_loc_list=1
-" let g:syntastic_loc_list_height=5
-" let g:syntastic_mode_map={'mode': 'active','passive_filetypes':['go']}
-" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-" ignore line width for syntax checking and add more complexity
-" add the following in ~/.config/flake8
-"
-" [flake8]
-" ignore = E501
-" max-line-length = 100
-" max-complexity = 10
-
-let g:languagetool_jar='$HOME/.vim/LanguageTool-2.8/languagetool-commandline.jar'
-
-" Tagbar
-nmap <leader>t :TagbarToggle<CR>
-
-" unite
-nnoremap <leader>e :Unite file_rec/async<cr>
-nnoremap <leader>b :Unite -quick-match buffer<cr>
-nnoremap <leader>f :Unite file_rec/async buffer<cr>
-let g:unite_source_grep_command = 'ack'
-let g:unite_source_grep_default_opts='--no-heading --no-color -k -H'
-let g:unite_source_grep_recursive_opt=''
-nnoremap <leader>/ :Unite grep:.<cr>
-nnoremap <leader>? :Unite grep<cr>
-" let g:unite_source_history_yank_enable = 1
-nnoremap <leader>y :Unite history/yank<cr>
-nnoremap <leader>l :Unite line<cr>
-
-" go
-" Show a list of interfaces which is implemented by the type under your cursor
-au FileType go nmap <Leader>s <Plug>(go-implements)
-" Show type info for the word under your cursor
-au FileType go nmap <Leader>i <Plug>(go-info)
-" Open the relevant Godoc for the word under the cursor
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-" Or open the Godoc in browser
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-" run, build, test and coverage
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-" go to definition
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
-au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-" Rename the identifier under the cursor to a new name
-au FileType go nmap <Leader>e <Plug>(go-rename)
-
-" Enable goimports to automatically insert import paths instead of gofmt
-let g:go_fmt_command = "goimports"
-
-" let g:go_fmt_fail_silently = 0
-" let g:go_fmt_autosave = 1
-
-" By default syntax-highlighting for Functions, Methods and Structs is
-" disabled. To change it:
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
 
 " }}}
 
