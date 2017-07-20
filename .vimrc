@@ -15,15 +15,16 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 
 " My Plugins here:
+Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'peterhoeg/vim-qml'
+Plugin 'javier-lopez/sprunge.vim'
 " don't forget to rename jpythonfold.vim to python.vim
 Plugin 'jpythonfold.vim'
 Plugin 'scrooloose/syntastic'
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'sjbach/lusty'
 Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mattn/webapi-vim'
+Plugin 'mhinz/vim-signify'
+Plugin 'ElmCast/elm-vim'
 Plugin 'groenewege/vim-less'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kchmck/vim-coffee-script'
@@ -37,27 +38,20 @@ Plugin 'c.vim'
 Plugin 'fatih/vim-go'
 Plugin 'lilydjwg/colorizer'
 Plugin 'sudar/vim-arduino-syntax'
-Plugin 'kunstmusik/csound-vim'
+" Plugin 'kunstmusik/csound-vim'
 Plugin 'tpope/vim-haml'
 Plugin 'statianzo/vim-jade'
+Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'wavded/vim-stylus'
 Plugin 'majutsushi/tagbar'
 Plugin 'guns/xterm-color-table.vim'
 Plugin 'vim-scripts/LanguageTool'
 Plugin 'esneider/YUNOcommit.vim'
-" Plugin 'othree/yajs.vim'
 Plugin 'curist/vim-angular-template'
 Plugin 'aklt/plantuml-syntax'
 Plugin 'rhysd/vim-crystal'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/neoyank.vim'
-Plugin 'hobbestigrou/vimtips-fortune'
 Plugin 'tpope/vim-obsession'
-" Don't froget to go to vimproc directory and make
-Plugin 'Shougo/vimproc.vim'
 " snippet
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
@@ -179,8 +173,8 @@ hi SpellLocal term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guibg=Red
 " Editor ui {{{
 
 " remove statusline
-"set laststatus=0
-"set statusline=
+set laststatus=0
+set statusline=
 
 " ruler setting
 set ruler
@@ -215,6 +209,7 @@ set spelllang=fr
 " Language syntax indent
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType go setlocal shiftwidth=4 tabstop=4
+autocmd FileType elm setlocal shiftwidth=4 tabstop=4
 autocmd FileType javascript,sql,json,html,xhtml,css,xml,yaml,yml,htmldjango,mako,stylus,scss,jade,coffee,less setlocal shiftwidth=2 tabstop=2 expandtab
 " Language Automatically removing all trailing whitespace
 autocmd FileType python,c,javascript,css,html,xml,htmldjango,mako,vim,stylus,scss,jade,coffee,less autocmd BufWritePre <buffer> :%s/\s\+$//e
@@ -266,17 +261,35 @@ imap <left> <nop>
 imap <up> <nop>
 imap <down> <nop>
 
-" Ctrl-e: Go to end of line
-inoremap <C-e> <esc>A
+" Remap Ctrl-H and Ctrl-L to tabprev and tabnext
+noremap <C-H> : tabprev<CR>
+noremap <C-L> : tabnext<CR>
+tnoremap <C-H> <C-\><C-n>: tabprev<CR>
+tnoremap <C-L> <C-\><C-n>: tabnext<CR>
 
-" Ctrl-l: Move word right
-inoremap <C-l> <Right>
-" Ctrl-h: Move word left
-inoremap <C-h> <Left>
-" Ctrl-j: Move cursor down
-inoremap <expr> <C-j> pumvisible() ? "\<C-e>\<Down>" : "\<Down>"
-" Ctrl-k: Move cursor up
-inoremap <expr> <C-k> pumvisible() ? "\<C-e>\<Up>" : "\<Up>"
+" Remap Alt-hkjl to navigate between windows in both terminal
+" and normal buffers
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+
+" " Ctrl-e: Go to end of line
+" inoremap <C-e> <esc>A
+"
+" " Ctrl-l: Move word right
+" inoremap <C-l> <Right>
+" " Ctrl-h: Move word left
+" inoremap <C-h> <Left>
+" " Ctrl-j: Move cursor down
+" inoremap <expr> <C-j> pumvisible() ? "\<C-e>\<Down>" : "\<Down>"
+" " Ctrl-k: Move cursor up
+" inoremap <expr> <C-k> pumvisible() ? "\<C-e>\<Up>" : "\<Up>"
 
 " }}}
 
@@ -311,7 +324,7 @@ nmap <leader><Space> V
 set pastetoggle=<leader>p
 
 " upload to sprunge.us
-command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
+"command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
 
 " ack
 " let g:ackprg="ack -H --nocolor --nogroup --column"
@@ -323,12 +336,16 @@ command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
 
 " Plugin conf {{{
 
+" python venv
+let g:virtualenv_auto_activate = 1
+
 " Y U No Commit?
-let g:YUNOcommit_after = 20
+let g:YUNOcommit_after = 40
 
 " vim jedi don't auto start completion
 let g:jedi#popup_on_dot = 0
 let g:jedi#completions_command = "<C-Space>"
+let g:jedi#force_py_version = 2
 
 " supertab depend on context, usefull to complete snipet and python methodes
 let g:SuperTabDefaultCompletionType = "context"
@@ -339,8 +356,8 @@ let g:fortune_vimtips_auto_display = 0
 " syntastic
 " don't forget to install flake8: pip install flake8
 let g:syntastic_python_checkers=['flake8']
-nmap <leader>2 :let g:syntastic_python_checkers=['flake8']<cr>
-nmap <leader>3 :let g:syntastic_python_checkers=['flake8.py3']<cr>
+nmap <leader>2 :let g:syntastic_python_checkers=['flake8']<cr>:let g:syntastic_python_python_exec = '/usr/bin/python'<cr>
+nmap <leader>3 :let g:syntastic_python_checkers=['flake8py3']<cr>:let g:syntastic_python_python_exec = '/usr/bin/python3'<cr>
 let g:syntastic_auto_loc_list=1
 " let g:syntastic_loc_list_height=5
 " let g:syntastic_mode_map={'mode': 'active','passive_filetypes':['go']}
@@ -478,38 +495,6 @@ set hlsearch
 
 " }}}
 
-" Plugin Memo {{{
-
-" lusty-explorer {{{
-"
-" <Leader>lf  - Opens filesystem explorer.
-" <Leader>lr  - Opens filesystem explorer at the directory of the current file.
-" <Leader>lb  - Opens buffer explorer.
-" <Leader>lg  - Opens buffer grep.
-"
-" }}}
-
-" lusty-juggler {{{
-"
-" <Leader>lj  - Launch the juggler with this key combo
-"
-" The buffer names are mapped to these keys:
-"
-"       1st --> a or 1
-"       2nd --> s or 2
-"       3rd --> d or 3
-"       4th --> f or 4
-"       5th --> g or 5
-"       6th --> h or 6
-"       7th --> j or 7
-"       8th --> k or 8
-"       9th --> l or 9
-"       10th --> ; or 0
-"
-" }}}
-
-" }}}
-
 " ViM Memo {{{
 "
 " Register
@@ -542,6 +527,28 @@ set hlsearch
 " go to caractere in line mark a    -> `a
 " previous mark                     -> [' or [`
 " next mark                         -> ]' or ]`
+"
+" Splits
+" ======
+"
+" split horizontaly                 -> :sp
+" split verticaly                   -> :vs
+" fold horizontal splits            -> <C-w-_>
+" fold vertical splits              -> <C-w-|>
+" unfold all splits                 -> <C-w-=>
+"
+" Rename buffer
+" =============
+"
+" to rename a buffer use            -> :file <new buffer name>
+"
+" Paste to vim command line
+" =========================
+"
+" paste from default register       -> <C-R> "
+" paste from another register       -> <C-R> <register>
+" paste from clipboard              -> <C-R><C-O> "
+"                                or -> <Shift-Insert>
 "
 " Spell
 " =====
