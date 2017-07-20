@@ -31,7 +31,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(go golang pass bower git archlinux django github history history-substring-search)
+plugins=(go golang pass bower git archlinux django github history history-substring-search mercurial)
 
 # source /etc/profile
 source $ZSH/oh-my-zsh.sh
@@ -60,9 +60,11 @@ alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 alias tmux='TERM=xterm-256color tmux -2 -u'
 alias ta='tmux attach-session -t '
 alias mkdir='mkdir -pv'
-alias vi=vim
-alias svi='sudo vim'
-alias svi='sudo vim'
+function vim {
+	PYTHONPATH=`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"` /usr/bin/nvim "$@"
+}
+alias vi=nvim
+alias svi='sudo nvim'
 # activate a python virtualenv named venv in the current dir
 alias activate='. ./venv/bin/activate'
 # quit evilwm, could use ctrl-alt-backspace too
@@ -74,7 +76,16 @@ alias share='imgur'
 # usefull to show program output in english
 alias us='env LANG=en_US.UTF-8'
 # laptop: asign control signal to caps-lock key
-alias ctrlcaps='setxkbmap -option ctrl:nocaps 2>/dev/null'
+alias ctrlcaps='setxkbmap -option ctrl:swapcaps 2>/dev/null'
+alias altswap='setxkbmap -option altwin:swap_alt_win 2>/dev/null'
+alias compose="setxkbmap -option compose:ralt"
+function laptop {
+	ctrlcaps
+	altswap
+	compose
+}
+# yes, that sounds tricky but this is the way to unset xkbmap options
+alias unsetxkbmap='setxkbmap -option -option'
 # full screen shot
 alias shotall='scrot -z -c -d 2 ~/Pictures/%Y-%m-%d-%T-screenshot.png'
 alias la='ls -a'
@@ -89,6 +100,12 @@ funcGoBinData() {
 }
 alias sql_bindata=funcGoBinData
 
+# hg alias
+alias hgtree="hg --hidden log --graph --template '{rev}:{node|short} {branch} {desc|firstline}\n'"
+function hgll {
+	hg log -G -p -r "topic($1)"
+}
+
 # git aliases
 alias gittree="git log --graph --oneline --decorate --all"
 alias gitlog="git log --oneline --decorate"
@@ -100,11 +117,20 @@ alias gitdiff="git diff"
 function gitfix {
 	git checkout master && git pull origin master && git fetch && git checkout origin/$1 && git checkout -b $1
 }
+function gitdeletebranch {
+	git branch -D $1
+	if [ -z $2 ]
+	then
+		git push origin --delete $1
+	else
+		git push $2 --delete $1
+	fi
+}
 
 # Docker aliases
 function dockerclean_volumes {
        for v in `docker volume ls -q`; do
-              if [[ $v =~ ^(dramarts-postgres|chaahk-postgres|criminocorpus_db|criminocorpus-postgres)$ ]]; then
+              if [[ $v =~ ^(leadme-postgres|dramarts-postgres|chaahk-postgres|criminocorpus_db|criminocorpus-postgres)$ ]]; then
                      echo "preserving $v"
               else
                      docker volume rm $v
@@ -119,27 +145,29 @@ function dockerrmi {
 	docker rmi $(docker images -f "dangling=true" -q)
 }
 
-alias compose="setxkbmap -option compose:ralt"
 alias synergy-server="/usr/bin/synergys --enable-crypto --no-daemon --config /etc/synergy/synergy.conf &>/tmp/synergy.log &"
 # alias dig="/home/scl/Project/dig-color/dig-color.sh"
 alias apk="sudo apk"
-alias show_wifi="iwlist wlan0 scanning |grep SSID"
+alias show_wifi="sudo iw dev wlan0 scan |grep SSID"
 setup_wifi() {
 	wpa_passphrase $1 >> /etc/wpa_supplicant/wpa_supplicant.conf
 	sudo /etc/init.d/wpa_supplicant restart
 	sudo /etc/init.d/networking restart
 }
 
+alias goplayground="godoc -http=:6060 -play -index"
 
-export EDITOR='vim'
+
+export EDITOR='nvim'
 #export PATH=$PATH:/sbin:/home/scl/.cabal/bin:/home/scl/bin:/home/scl/bin/seafile-cli
 #export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 export WORKON_HOME=~/Envs
-# export GOROOT=/usr/lib/go
+export GOROOT=/usr/lib/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin:/usr/lib/go/bin
 export PATH=/sbin:$PATH
 export PATH=/usr/sbin:$PATH:/usr/local/bin
+export PATH=$PATH:$HOME/.cargo/bin
 
 MAIL=/var/spool/mail/scl && export MAIL
 
@@ -176,3 +204,14 @@ TERM=xterm
 
 # fix java white screen bug on dwm cf. https://wiki.archlinux.org/index.php/Dwm#Fixing_misbehaving_Java_applications
 # wmname LG3D
+
+# QT
+export QT_VERSION=5.8.0
+export QT_DIR=/usr/lib/qt5/bin
+export QT_STUB=false
+export QT_DEBUG=false
+export QT_QMAKE_DIR=/usr/lib/qt5/bin
+export WORKON_HOME=~/Envs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+source /usr/bin/virtualenvwrapper.sh
