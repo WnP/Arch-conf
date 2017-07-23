@@ -13,15 +13,23 @@ call vundle#begin()
 
 " required it's vundle!
 Plugin 'gmarik/vundle'
+" Plugin 'jmcantrell/vim-virtualenv'
 
 " My Plugins here:
-Plugin 'jmcantrell/vim-virtualenv'
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
+Plugin 'benekastah/neomake'
+Plugin 'benjie/neomake-local-eslint.vim'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'zchee/deoplete-jedi'
+Plugin 'carlitux/deoplete-ternjs'
+Plugin 'zchee/deoplete-go'
+Plugin 'pbogut/deoplete-elm'
+
 Plugin 'peterhoeg/vim-qml'
 Plugin 'javier-lopez/sprunge.vim'
 " don't forget to rename jpythonfold.vim to python.vim
 Plugin 'jpythonfold.vim'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mhinz/vim-signify'
 Plugin 'ElmCast/elm-vim'
@@ -33,7 +41,7 @@ Plugin 'tpope/vim-markdown'
 Plugin 'sophacles/vim-bundle-mako'
 Plugin 'vim-scripts/django.vim'
 Plugin 'ajford/vimkivy'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 Plugin 'c.vim'
 Plugin 'fatih/vim-go'
 Plugin 'lilydjwg/colorizer'
@@ -51,8 +59,11 @@ Plugin 'curist/vim-angular-template'
 Plugin 'aklt/plantuml-syntax'
 Plugin 'rhysd/vim-crystal'
 Plugin 'tpope/vim-obsession'
+Plugin 'hobbestigrou/vimtips-fortune'
 " snippet
-Plugin 'garbas/vim-snipmate'
+" Plugin 'MarcWeber/vim-addon-mw-utils'  " required by snipmate
+" Plugin 'garbas/vim-snipmate'
+Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 call vundle#end()             " required by vundle!
@@ -261,11 +272,11 @@ imap <left> <nop>
 imap <up> <nop>
 imap <down> <nop>
 
-" Remap Ctrl-H and Ctrl-L to tabprev and tabnext
-noremap <C-H> : tabprev<CR>
-noremap <C-L> : tabnext<CR>
-tnoremap <C-H> <C-\><C-n>: tabprev<CR>
-tnoremap <C-L> <C-\><C-n>: tabnext<CR>
+" " Remap Ctrl-H and Ctrl-L to tabprev and tabnext
+noremap <C-J> : tabprev<CR>
+noremap <C-K> : tabnext<CR>
+" tnoremap <C-H> <C-\><C-n>: tabprev<CR>
+" tnoremap <C-L> <C-\><C-n>: tabnext<CR>
 
 " Remap Alt-hkjl to navigate between windows in both terminal
 " and normal buffers
@@ -295,17 +306,6 @@ nnoremap <A-l> <C-w>l
 
 " Plugin keys & nav {{{
 
-" GitGutter - navig through git diff
-nmap <leader>g <Plug>GitGutterNextHunk
-nmap <leader>G <Plug>GitGutterPrevHunk
-
-" UndoTree
-nnoremap <leader>u :UndotreeToggle<cr>
-
-" NeerdTree
-"nnoremap <leader>e :NERDTreeToggle<cr>
-"let NERDTreeQuitOnOpen=1
-
 " tab keys
 nmap <leader>tn :tabnew<cr>
 " map <leader>tc :tabclose<CR>
@@ -326,67 +326,39 @@ set pastetoggle=<leader>p
 " upload to sprunge.us
 "command! Sprunge w !curl -F 'sprunge=<-' http://sprunge.us
 
-" ack
-" let g:ackprg="ack -H --nocolor --nogroup --column"
-" nmap <leader>f mA:Ack<space>
-" nmap <leader>fa mA:Ack "<C-r>=expand("<cword>")<cr>"
-" nmap <leader>fA mA:Ack "<C-r>=expand("<cWORD>")<cr>"
 
 " }}}
 
 " Plugin conf {{{
 
-" python venv
-let g:virtualenv_auto_activate = 1
+" Run syntax checking on every write
+autocmd! BufWritePost * Neomake
+let g:neomake_open_list = 2
+
+" Select python linters I want
+let g:neomake_python_enabled_makers = ['flake8', 'python']
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" " python venv
+" let g:virtualenv_auto_activate = 1
 
 " Y U No Commit?
 let g:YUNOcommit_after = 40
 
-" vim jedi don't auto start completion
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#force_py_version = 2
-
-" supertab depend on context, usefull to complete snipet and python methodes
-let g:SuperTabDefaultCompletionType = "context"
-
 " don't display fortune on startup
 let g:fortune_vimtips_auto_display = 0
-
-" syntastic
-" don't forget to install flake8: pip install flake8
-let g:syntastic_python_checkers=['flake8']
-nmap <leader>2 :let g:syntastic_python_checkers=['flake8']<cr>:let g:syntastic_python_python_exec = '/usr/bin/python'<cr>
-nmap <leader>3 :let g:syntastic_python_checkers=['flake8py3']<cr>:let g:syntastic_python_python_exec = '/usr/bin/python3'<cr>
-let g:syntastic_auto_loc_list=1
-" let g:syntastic_loc_list_height=5
-" let g:syntastic_mode_map={'mode': 'active','passive_filetypes':['go']}
-" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-" ignore line width for syntax checking and add more complexity
-" add the following in ~/.config/flake8
-"
-" [flake8]
-" ignore = E501
-" max-line-length = 100
-" max-complexity = 10
 
 let g:languagetool_jar='$HOME/.vim/LanguageTool-2.8/languagetool-commandline.jar'
 
 " Tagbar
 nmap <leader>t :TagbarToggle<CR>
-
-" unite
-nnoremap <leader>e :Unite file_rec/async<cr>
-nnoremap <leader>b :Unite -quick-match buffer<cr>
-nnoremap <leader>f :Unite file_rec/async buffer<cr>
-let g:unite_source_grep_command = 'ack'
-let g:unite_source_grep_default_opts='--no-heading --no-color -k -H'
-let g:unite_source_grep_recursive_opt=''
-nnoremap <leader>/ :Unite grep:.<cr>
-nnoremap <leader>? :Unite grep<cr>
-" let g:unite_source_history_yank_enable = 1
-nnoremap <leader>y :Unite history/yank<cr>
-nnoremap <leader>l :Unite line<cr>
 
 " go
 " Show a list of interfaces which is implemented by the type under your cursor
@@ -424,29 +396,6 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
 
 " }}}
 
