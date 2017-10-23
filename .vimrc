@@ -13,58 +13,101 @@ call vundle#begin()
 
 " required it's vundle!
 Plugin 'gmarik/vundle'
-" Plugin 'jmcantrell/vim-virtualenv'
 
-" My Plugins here:
-"Plugin 'davidhalter/jedi-vim'
+" completion {{{
 Plugin 'benekastah/neomake'
 Plugin 'benjie/neomake-local-eslint.vim'
 Plugin 'Shougo/deoplete.nvim'
+" Python
 Plugin 'zchee/deoplete-jedi'
+" JS
 Plugin 'carlitux/deoplete-ternjs'
+" Golang
 Plugin 'zchee/deoplete-go'
+" Elm
 Plugin 'pbogut/deoplete-elm'
+" Rust
+Plugin 'racer-rust/vim-racer'
+" }}}
 
-Plugin 'peterhoeg/vim-qml'
-Plugin 'javier-lopez/sprunge.vim'
-" don't forget to rename jpythonfold.vim to python.vim
-Plugin 'jpythonfold.vim'
-"Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-fugitive'
-Plugin 'mhinz/vim-signify'
-Plugin 'ElmCast/elm-vim'
-Plugin 'groenewege/vim-less'
-Plugin 'pangloss/vim-javascript'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'tpope/vim-markdown'
-Plugin 'sophacles/vim-bundle-mako'
-Plugin 'vim-scripts/django.vim'
-Plugin 'ajford/vimkivy'
-"Plugin 'ervandew/supertab'
+" Languages {{{
+" C
 Plugin 'c.vim'
+" Golang
 Plugin 'fatih/vim-go'
-Plugin 'lilydjwg/colorizer'
-Plugin 'sudar/vim-arduino-syntax'
-" Plugin 'kunstmusik/csound-vim'
-Plugin 'tpope/vim-haml'
-Plugin 'statianzo/vim-jade'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'wavded/vim-stylus'
-Plugin 'majutsushi/tagbar'
-Plugin 'guns/xterm-color-table.vim'
-Plugin 'vim-scripts/LanguageTool'
-Plugin 'esneider/YUNOcommit.vim'
-Plugin 'curist/vim-angular-template'
-Plugin 'aklt/plantuml-syntax'
+" Elm
+Plugin 'ElmCast/elm-vim'
+" Rust
+Plugin 'rust-lang/rust.vim'
+" JS
+Plugin 'pangloss/vim-javascript'
+" QML
+Plugin 'peterhoeg/vim-qml'
+" Less
+Plugin 'groenewege/vim-less'
+" Coffee Script
+Plugin 'kchmck/vim-coffee-script'
+" CSS3
+Plugin 'hail2u/vim-css3-syntax'
+" Kivy KV lang
+Plugin 'ajford/vimkivy'
+" Crystal lang
 Plugin 'rhysd/vim-crystal'
-Plugin 'tpope/vim-obsession'
-Plugin 'hobbestigrou/vimtips-fortune'
-" snippet
-" Plugin 'MarcWeber/vim-addon-mw-utils'  " required by snipmate
-" Plugin 'garbas/vim-snipmate'
+" Arduino
+Plugin 'sudar/vim-arduino-syntax'
+" Sass - Scss
+Plugin 'cakebaker/scss-syntax.vim'
+" PlantUML
+Plugin 'aklt/plantuml-syntax'
+" templates {{{
+" Markdown
+Plugin 'tpope/vim-markdown'
+" Mako template
+Plugin 'sophacles/vim-bundle-mako'
+" Django template
+Plugin 'vim-scripts/django.vim'
+" Jade template
+Plugin 'statianzo/vim-jade'
+" Haml template
+Plugin 'tpope/vim-haml'
+" Stylus template
+Plugin 'wavded/vim-stylus'
+" Angular template
+Plugin 'curist/vim-angular-template'
+" }}}
+" }}}
+
+" Fold
+" Python - don't forget to rename jpythonfold.vim to python.vim
+Plugin 'jpythonfold.vim'
+
+" Snippets
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+
+" CVS
+Plugin 'tpope/vim-fugitive'
+Plugin 'mhinz/vim-signify'
+
+" Other tools
+" Source tags using Exuberant Ctags
+Plugin 'majutsushi/tagbar'
+" All 256 xterm colors with their RGB equivalents
+Plugin 'guns/xterm-color-table.vim'
+" Gramar checker
+Plugin 'vim-scripts/LanguageTool'
+" Just ask you why you no commit if you don't since xtimes
+Plugin 'esneider/YUNOcommit.vim'
+" Session management
+Plugin 'tpope/vim-obsession'
+" Vim Fortune
+Plugin 'hobbestigrou/vimtips-fortune'
+" Fuzzy finder
+Plugin 'junegunn/fzf'
+" Paste
+Plugin 'javier-lopez/sprunge.vim'
+" Hex color preview
+Plugin 'lilydjwg/colorizer'
 
 call vundle#end()             " required by vundle!
 filetype plugin indent on     " required by vundle!
@@ -133,11 +176,13 @@ highlight SignColumn ctermbg=234
 " vsplit color
 highlight VertSplit ctermbg=234 ctermfg=234
 
-hi CursorLine   cterm=bold ctermbg=Black ctermfg=None
-hi CursorColumn cterm=None ctermbg=Black ctermfg=None
+hi CursorLine   cterm=bold ctermbg=233 ctermfg=None
+hi CursorColumn cterm=bold ctermbg=233 ctermfg=None
 au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
 set cursorline cursorcolumn
+
+hi ColorColumn ctermbg=DarkBlue ctermfg=white
 
 " visual color
 hi Visual  ctermbg=0 ctermfg=Grey
@@ -190,6 +235,7 @@ set statusline=
 " ruler setting
 set ruler
 set rulerformat=%-50(%=%M%H%R\ %f%<\ (%n)%4(%)%Y:%{&tw}%9(%l,%c%V%)%4(%)%P%)
+set colorcolumn=80
 
 " put ⋅ for space at the end of line
 " | for tabs
@@ -345,6 +391,8 @@ if !exists('g:deoplete#omni#input_patterns')
 endif
 " let g:deoplete#disable_auto_complete = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " " python venv
 " let g:virtualenv_auto_activate = 1
@@ -382,6 +430,15 @@ au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 " Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
 
+" Rust
+set hidden
+let g:racer_cmd = "/usr/sbin/racer"
+let g:racer_experimental_completer = 1
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
 " Enable goimports to automatically insert import paths instead of gofmt
 let g:go_fmt_command = "goimports"
 
@@ -395,7 +452,6 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-
 
 " }}}
 
