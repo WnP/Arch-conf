@@ -15,8 +15,7 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 
 " completion {{{
-Plugin 'benekastah/neomake'
-Plugin 'benjie/neomake-local-eslint.vim'
+" All completion is managed by deoplete
 Plugin 'Shougo/deoplete.nvim'
 " Python
 Plugin 'zchee/deoplete-jedi'
@@ -29,6 +28,11 @@ Plugin 'pbogut/deoplete-elm'
 " Rust
 Plugin 'racer-rust/vim-racer'
 " }}}
+
+" Syntax Checking
+"Plugin 'benekastah/neomake'
+"Plugin 'benjie/neomake-local-eslint.vim'
+Plugin 'w0rp/ale'
 
 " Languages {{{
 " C
@@ -377,12 +381,14 @@ set pastetoggle=<leader>p
 
 " Plugin conf {{{
 
-" Run syntax checking on every write
-autocmd! BufWritePost * Neomake
-let g:neomake_open_list = 2
+" FZF fuzzy finder
+nnoremap <C-I> :call fzf#run({ 'sink': 'tabe', 'down': '40%' })<CR>
+nnoremap <C-O> :call fzf#run({ 'sink': 'split', 'down': '40%' })<CR>
+nnoremap <C-P> :call fzf#run({ 'sink': 'vplit', 'down': '40%' })<CR>
+nnoremap <C-E> :call fzf#run({ 'sink': 'e', 'down': '40%' })<CR>
 
-" Select python linters I want
-let g:neomake_python_enabled_makers = ['flake8', 'python']
+" Append --no-height
+let $FZF_DEFAULT_OPTS .= ' --no-height'
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
