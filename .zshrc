@@ -38,8 +38,10 @@ source $ZSH/oh-my-zsh.sh
 # source /usr/bin/virtualenvwrapper.sh &>/dev/null
 
 alias grep='grep --color=always -d skip'
+alias open='xdg-open'
 alias emacs='sudo emacs -nw'
 alias pacman='sudo pacman'
+alias xbps-install='sudo xbps-install'
 alias systemctl='sudo systemctl'
 alias service='sudo service'
 alias mount='sudo mount'
@@ -60,10 +62,11 @@ alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 alias tmux='TERM=xterm-256color tmux -2 -u'
 alias ta='tmux attach-session -t '
 alias mkdir='mkdir -pv'
-function vim {
-	PYTHONPATH=`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"` /usr/bin/nvim "$@"
-}
+# function vim {
+# 	PYTHONPATH=`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"` /usr/bin/nvim "$@"
+# }
 alias vi=nvim
+alias vim=nvim
 alias svi='sudo nvim'
 # activate a python virtualenv named venv in the current dir
 alias activate='. ./venv/bin/activate'
@@ -83,6 +86,16 @@ function laptop {
 	ctrlcaps
 	altswap
 	compose
+}
+function files {
+	if [ -z $1 ]
+	then
+		nohup dropbox start &
+		nohup seaf-cli start &
+	else
+		dropbox stop
+		seaf-cli stop
+	fi
 }
 # yes, that sounds tricky but this is the way to unset xkbmap options
 alias unsetxkbmap='setxkbmap -option -option'
@@ -148,14 +161,17 @@ function dockerrmi {
 alias synergy-server="/usr/bin/synergys --enable-crypto --no-daemon --config /etc/synergy/synergy.conf &>/tmp/synergy.log &"
 # alias dig="/home/scl/Project/dig-color/dig-color.sh"
 alias apk="sudo apk"
-alias show_wifi="sudo iw dev wlan0 scan |grep SSID"
+alias show_wifi="sudo iw dev wlp1s0 scan |grep SSID"
 setup_wifi() {
-	wpa_passphrase $1 >> /etc/wpa_supplicant/wpa_supplicant.conf
-	sudo /etc/init.d/wpa_supplicant restart
-	sudo /etc/init.d/networking restart
+	wpa_passphrase $1 >> /etc/wpa_supplicant/wpa_supplicant-wlp1s0.conf
+	sudo sv restart wpa_supplicant
 }
 
 alias goplayground="godoc -http=:6060 -play -index"
+alias zzz="sudo zzz"
+alias ZZZ="sudo ZZZ"
+alias poweroff="sudo poweroff"
+alias reboot="sudo reboot"
 
 
 export EDITOR='nvim'
@@ -215,3 +231,31 @@ export WORKON_HOME=~/Envs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 source /usr/bin/virtualenvwrapper.sh
+
+alias vp="vim -u ~/.vim.pager -"
+# fzf
+#export FZF_DEFAULT_OPTS="--preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || pygmentize -f terminal256 {} | head -500'"
+search() {
+	fzf --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || chroma -s pygments {} | head -500'
+}
+vs() {
+	vim $(search)
+}
+alias v="vim"
+export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_DEFAULT_OPTS=' --preview "[[ $(file --mime {}) =~ directory ]] && ls -l --color=always {} || [[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || chroma -s pygments {} | head -500"'
+# export FZF_CTRL_T_OPTS=' --preview "[[ $(file --mime {}) =~ directory ]] && ls -l --color=always {} ||  [[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || chroma -s pygments {} | head -500"'
+# export FZF_ALT_C_OPTS=' --preview "ls -l --color=always {}"'
+export FZF_CTRL_R_OPTS=' --preview-window=right:0%'
+source /usr/share/doc/fzf/completion.zsh
+source /usr/share/doc/fzf/key-bindings.zsh
+export RUST_SRC_PATH=/home/scl/rust/rust/src
+export QT_QPA_PLATFORMTHEME='qt5ct'
+# fzf fix: https://github.com/junegunn/fzf/issues/809
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
+
+# Usefull tools:
+# htop
+# iotop
+# powertop
+# nethogs
