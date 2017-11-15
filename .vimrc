@@ -1,120 +1,124 @@
 set nocompatible               " be iMproved
 set modeline
 
-" vundle conf {{{
-
-filetype off                   " required by vundle!
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Plug conf {{{
+call plug#begin('~/.local/share/nvim/plugged')
 
 " }}}
 
-" bundles {{{
-
-" required it's vundle!
-Plugin 'gmarik/vundle'
+" Plugins {{{
 
 " completion {{{
 " All completion is managed by deoplete
-Plugin 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim'
 " Python
-Plugin 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-jedi'
 " JS
-Plugin 'carlitux/deoplete-ternjs'
+Plug 'carlitux/deoplete-ternjs'
 " Golang
-Plugin 'zchee/deoplete-go'
+Plug 'zchee/deoplete-go'
 " Elm
-Plugin 'pbogut/deoplete-elm'
+Plug 'pbogut/deoplete-elm'
 " Rust
-Plugin 'racer-rust/vim-racer'
+Plug 'racer-rust/vim-racer'
 " }}}
 
 " Syntax Checking
-"Plugin 'benekastah/neomake'
-"Plugin 'benjie/neomake-local-eslint.vim'
-Plugin 'w0rp/ale'
+"Plug 'benekastah/neomake'
+"Plug 'benjie/neomake-local-eslint.vim'
+Plug 'w0rp/ale'
 
 " Languages {{{
 " C
-Plugin 'c.vim'
+Plug 'vim-scripts/c.vim'
 " Golang
-Plugin 'fatih/vim-go'
+Plug 'fatih/vim-go'
 " Elm
-Plugin 'ElmCast/elm-vim'
+Plug 'ElmCast/elm-vim'
 " Rust
-Plugin 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim'
 " JS
-Plugin 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 " QML
-Plugin 'peterhoeg/vim-qml'
+Plug 'peterhoeg/vim-qml'
 " Less
-Plugin 'groenewege/vim-less'
+Plug 'groenewege/vim-less'
 " Coffee Script
-Plugin 'kchmck/vim-coffee-script'
+Plug 'kchmck/vim-coffee-script'
 " CSS3
-Plugin 'hail2u/vim-css3-syntax'
+Plug 'hail2u/vim-css3-syntax'
 " Kivy KV lang
-Plugin 'ajford/vimkivy'
+Plug 'ajford/vimkivy'
 " Crystal lang
-Plugin 'rhysd/vim-crystal'
+Plug 'rhysd/vim-crystal'
 " Arduino
-Plugin 'sudar/vim-arduino-syntax'
+Plug 'sudar/vim-arduino-syntax'
 " Sass - Scss
-Plugin 'cakebaker/scss-syntax.vim'
+Plug 'cakebaker/scss-syntax.vim'
 " PlantUML
-Plugin 'aklt/plantuml-syntax'
+Plug 'aklt/plantuml-syntax'
 " templates {{{
 " Markdown
-Plugin 'tpope/vim-markdown'
+Plug 'tpope/vim-markdown'
 " Mako template
-Plugin 'sophacles/vim-bundle-mako'
+Plug 'sophacles/vim-bundle-mako'
 " Django template
-Plugin 'vim-scripts/django.vim'
+Plug 'vim-scripts/django.vim'
 " Jade template
-Plugin 'statianzo/vim-jade'
+Plug 'statianzo/vim-jade'
 " Haml template
-Plugin 'tpope/vim-haml'
+Plug 'tpope/vim-haml'
 " Stylus template
-Plugin 'wavded/vim-stylus'
+Plug 'wavded/vim-stylus'
 " Angular template
-Plugin 'curist/vim-angular-template'
+Plug 'curist/vim-angular-template'
 " }}}
 " }}}
 
 " Fold
 " Python - don't forget to rename jpythonfold.vim to python.vim
-Plugin 'jpythonfold.vim'
+Plug 'vim-scripts/jpythonfold.vim'
 
 " Snippets
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " CVS
-Plugin 'tpope/vim-fugitive'
-Plugin 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
+Plug 'jlfwong/vim-mercenary'
 
 " Other tools
 " Source tags using Exuberant Ctags
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 " All 256 xterm colors with their RGB equivalents
-Plugin 'guns/xterm-color-table.vim'
+Plug 'guns/xterm-color-table.vim'
 " Gramar checker
-Plugin 'vim-scripts/LanguageTool'
+Plug 'vim-scripts/LanguageTool'
 " Just ask you why you no commit if you don't since xtimes
-Plugin 'esneider/YUNOcommit.vim'
+Plug 'esneider/YUNOcommit.vim'
 " Session management
-Plugin 'tpope/vim-obsession'
+Plug 'tpope/vim-obsession'
 " Vim Fortune
-Plugin 'hobbestigrou/vimtips-fortune'
+Plug 'hobbestigrou/vimtips-fortune'
 " Fuzzy finder
-Plugin 'junegunn/fzf'
+Plug 'junegunn/fzf'
 " Paste
-Plugin 'javier-lopez/sprunge.vim'
+Plug 'javier-lopez/sprunge.vim'
 " Hex color preview
-Plugin 'lilydjwg/colorizer'
+Plug 'lilydjwg/colorizer'
+" Zeal documentation support
+Plug 'KabbAmine/zeavim.vim', {'on': [
+			\	'Zeavim', 'Docset',
+			\	'<Plug>Zeavim',
+			\	'<Plug>ZVVisSelection',
+			\	'<Plug>ZVKeyDocset',
+			\	'<Plug>ZVMotion'
+			\ ]}
 
-call vundle#end()             " required by vundle!
-filetype plugin indent on     " required by vundle!
+" Required by Plug
+" Initialize plugin system
+call plug#end()
 
 " }}}
 
@@ -235,6 +239,9 @@ hi SpellLocal term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guibg=Red
 " remove statusline
 set laststatus=0
 set statusline=
+
+" inccomand - replace in place / aka pseudo multicursor mode
+set inccommand=split
 
 " ruler setting
 set ruler
@@ -382,8 +389,8 @@ set pastetoggle=<leader>p
 " Plugin conf {{{
 
 " FZF fuzzy finder
-nnoremap <C-I> :call fzf#run({ 'sink': 'tabe', 'down': '40%' })<CR>
-nnoremap <C-O> :call fzf#run({ 'sink': 'split', 'down': '40%' })<CR>
+nnoremap <C-m> :call fzf#run({ 'sink': 'tabe', 'down': '40%' })<CR>
+nnoremap <C-l> :call fzf#run({ 'sink': 'split', 'down': '40%' })<CR>
 nnoremap <C-P> :call fzf#run({ 'sink': 'vplit', 'down': '40%' })<CR>
 nnoremap <C-E> :call fzf#run({ 'sink': 'e', 'down': '40%' })<CR>
 
@@ -458,6 +465,12 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+
+" Zeal
+nmap gzz <Plug>Zeavim
+vmap gzz <Plug>ZVVisSelection
+" nmap gz <Plug>ZVMotion
+nmap gZ <Plug>ZVKeyDocset
 
 " }}}
 
