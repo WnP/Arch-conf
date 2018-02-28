@@ -27,6 +27,9 @@ Plug 'racer-rust/vim-racer'
 "Plug 'benekastah/neomake'
 "Plug 'benjie/neomake-local-eslint.vim'
 Plug 'w0rp/ale'
+" Status line
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 
 " Languages {{{
 " C
@@ -78,6 +81,7 @@ Plug 'curist/vim-angular-template'
 " Fold
 " Python - don't forget to rename jpythonfold.vim to python.vim
 Plug 'vim-scripts/jpythonfold.vim'
+Plug 'davidhalter/jedi-vim'
 
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -190,7 +194,7 @@ au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
 set cursorline cursorcolumn
 
-hi ColorColumn ctermbg=DarkBlue ctermfg=white
+hi ColorColumn cterm=bold ctermbg=233 ctermfg=None
 
 " visual color
 hi Visual  ctermbg=0 ctermfg=Grey
@@ -237,15 +241,16 @@ hi SpellLocal term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guibg=Red
 " Editor ui {{{
 
 " remove statusline
-set laststatus=0
-set statusline=
+"set laststatus=0
+"set statusline=
+set noshowmode
 
 " inccomand - replace in place / aka pseudo multicursor mode
 set inccommand=split
 
 " ruler setting
-set ruler
-set rulerformat=%-50(%=%M%H%R\ %f%<\ (%n)%4(%)%Y:%{&tw}%9(%l,%c%V%)%4(%)%P%)
+"set ruler
+"set rulerformat=%-50(%=%M%H%R\ %f%<\ (%n)%4(%)%Y:%{&tw}%9(%l,%c%V%)%4(%)%P%)
 set colorcolumn=80
 
 " put ⋅ for space at the end of line
@@ -270,6 +275,8 @@ execute ":silent tab all"
 
 set spelllang=fr
 
+au TermOpen * setlocal nonumber norelativenumber
+
 " }}}
 
 " language specs {{{
@@ -282,6 +289,7 @@ autocmd FileType javascript,sql,json,html,xhtml,css,xml,yaml,yml,htmldjango,mako
 " Language Automatically removing all trailing whitespace
 autocmd FileType python,c,javascript,css,html,xml,htmldjango,mako,vim,stylus,scss,jade,coffee,less autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd BufEnter,BufNew *.Dockerfile setlocal filetype=dockerfile
+autocmd FileType mako setlocal filetype=mako.html
 
 " Language folding
 au Filetype javascript set omnifunc=javascriptcomplete#CompleteJS foldmethod=indent fdl=1
@@ -389,13 +397,41 @@ set pastetoggle=<leader>p
 " Plugin conf {{{
 
 " FZF fuzzy finder
-nnoremap <C-m> :call fzf#run({ 'sink': 'tabe', 'down': '40%' })<CR>
-nnoremap <C-l> :call fzf#run({ 'sink': 'split', 'down': '40%' })<CR>
-nnoremap <C-P> :call fzf#run({ 'sink': 'vplit', 'down': '40%' })<CR>
-nnoremap <C-E> :call fzf#run({ 'sink': 'e', 'down': '40%' })<CR>
+"nnoremap <C-m> :call fzf#run({ 'sink': 'tabe', 'down': '40%' })<CR>
+"nnoremap <C-l> :call fzf#run({ 'sink': 'split', 'down': '40%' })<CR>
+"nnoremap <C-P> :call fzf#run({ 'sink': 'vplit', 'down': '40%' })<CR>
+nnoremap <Leader>e :call fzf#run({ 'sink': 'e', 'down': '40%' })<CR>
 
 " Append --no-height
 let $FZF_DEFAULT_OPTS .= ' --no-height'
+
+" lint checker
+let g:ale_open_list = 'on_save'
+nmap <silent> <Leader>k <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>j <Plug>(ale_next_wrap)
+let b:ale_fixers = ['yapf']
+let g:ale_fix_on_save = 1
+
+let g:lightline = {}
+let g:lightline.component_expand = {
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
+let g:lightline.active = {
+      \     'left': [ [ 'mode', 'paste' ],
+      \               [ 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \               [ 'readonly', 'filename', 'modified' ]
+      \             ],
+      \     'right': [ [ 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \                [ 'lineinfo', 'percent' ],
+      \                [ 'fileformat', 'fileencoding', 'filetype' ]
+      \              ] }
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -409,6 +445,25 @@ let g:python3_host_prog = '/usr/bin/python3'
 
 " " python venv
 " let g:virtualenv_auto_activate = 1
+
+" Jedi
+let g:jedi#auto_vim_configuration = 0
+" current default is 1.
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#rename_command = '<Leader>r'
+let g:jedi#usages_command = '<Leader>u'
+let g:jedi#completions_enabled = 0
+let g:jedi#smart_auto_mappings = 1
+
+let g:jedi#goto_command = "gd"
+let g:jedi#goto_assignments_command = "<leader>g"
+" let g:jedi#goto_definitions_command = ""
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+
+" Unite/ref and pydoc are more useful.
+let g:jedi#documentation_command = '<Leader>K'
+let g:jedi#auto_close_doc = 1
 
 " Y U No Commit?
 let g:YUNOcommit_after = 40
