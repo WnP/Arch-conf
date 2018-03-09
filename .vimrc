@@ -42,6 +42,7 @@ Plug 'ElmCast/elm-vim'
 Plug 'rust-lang/rust.vim'
 " JS
 Plug 'pangloss/vim-javascript'
+Plug 'maksimr/vim-jsbeautify'
 " QML
 Plug 'peterhoeg/vim-qml'
 " Less
@@ -58,6 +59,8 @@ Plug 'rhysd/vim-crystal'
 Plug 'sudar/vim-arduino-syntax'
 " Sass - Scss
 Plug 'cakebaker/scss-syntax.vim'
+" SQL
+Plug 'b4b4r07/vim-sqlfmt'
 " PlantUML
 Plug 'aklt/plantuml-syntax'
 " templates {{{
@@ -93,6 +96,8 @@ Plug 'mhinz/vim-signify'
 Plug 'jlfwong/vim-mercenary'
 
 " Other tools
+" EditorConfig
+Plug 'editorconfig/editorconfig-vim'
 " Source tags using Exuberant Ctags
 Plug 'majutsushi/tagbar'
 " All 256 xterm colors with their RGB equivalents
@@ -396,6 +401,10 @@ set pastetoggle=<leader>p
 
 " Plugin conf {{{
 
+" EditorConfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+let g:EditorConfig_exec_path = '/usr/local/bin/editorconfig'
+
 " FZF fuzzy finder
 "nnoremap <C-m> :call fzf#run({ 'sink': 'tabe', 'down': '40%' })<CR>
 "nnoremap <C-l> :call fzf#run({ 'sink': 'split', 'down': '40%' })<CR>
@@ -526,6 +535,24 @@ nmap gzz <Plug>Zeavim
 vmap gzz <Plug>ZVVisSelection
 " nmap gz <Plug>ZVMotion
 nmap gZ <Plug>ZVKeyDocset
+
+" JS, JSON, CSS, HTML beautify
+" normal mode
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
+autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+autocmd FileType css,scss noremap <buffer> <c-f> :call CSSBeautify()<cr>
+" visual mode
+autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
+autocmd FileType jsx vnoremap <buffer> <c-f> :call RangeJsxBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+autocmd FileType css,scss vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+
+" SQL
+let g:sqlfmt_command = "sqlfmt"
+let g:sqlfmt_options = ""
 
 " }}}
 
