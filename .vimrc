@@ -116,6 +116,10 @@ Plug 'junegunn/fzf'
 Plug 'javier-lopez/sprunge.vim'
 " Hex color preview
 Plug 'lilydjwg/colorizer'
+" Tabs
+Plug 'godlygeek/tabular'
+" markdown TOC
+Plug 'mzlogin/vim-markdown-toc'
 " Zeal documentation support
 Plug 'KabbAmine/zeavim.vim', {'on': [
 			\	'Zeavim', 'Docset',
@@ -547,7 +551,7 @@ autocmd FileType css,scss noremap <buffer> <c-f> :call CSSBeautify()<cr>
 autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
 autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
 autocmd FileType jsx vnoremap <buffer> <c-f> :call RangeJsxBeautify()<cr>
-autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+autocmd FileType html,htmldjango vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
 autocmd FileType css,scss vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 
 " SQL
